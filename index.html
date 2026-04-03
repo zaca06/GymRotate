@@ -11,6 +11,8 @@
 <meta property="og:description" content="Planificador de rotaciones de gimnasia artística. Gratis, sin cuenta, funciona offline.">
 <meta property="og:locale" content="es_AR">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c8f135'/><text x='16' y='23' text-anchor='middle' font-family='monospace' font-weight='900' font-size='18' fill='%230c0d10'>G</text></svg>">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./pwa-icon-192.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -57,11 +59,11 @@ window.dispatchEvent(new Event('fb-ready'));
 }
 /* ── LIGHT THEME ── */
 body.light{
-  --bg:#f4f5f7;--s1:#ffffff;--s2:#eef0f3;--s3:#e4e6eb;
-  --bd:#d0d3dc;--bd2:#b8bcc9;
-  --tx:#1a1c22;--tx2:#5a5f73;--tx3:#9499ab;
-  --acc:#5a9e00;--acc-d:#4a8200;
-  --red:#d63c3c;--yel:#c47a00;--teal:#1aaa96;
+  --bg:#f7f6f3;--s1:#ffffff;--s2:#f2f0ea;--s3:#e9e5dc;
+  --bd:#d9d2c5;--bd2:#b9b09f;
+  --tx:#1d1c19;--tx2:#59554d;--tx3:#8a8377;
+  --acc:#2f8f1f;--acc-d:#247115;
+  --red:#c53a3a;--yel:#b77909;--teal:#0f9b86;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;font-size:14px;}
@@ -78,6 +80,12 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);overflow:hidde
   display:flex;align-items:center;gap:10px;
   padding:0 16px;height:50px;flex-shrink:0;
   background:var(--s1);border-bottom:1px solid var(--bd);z-index:200;
+}
+body.light .hdr,body.light .toolbar,body.light .sidebar,body.light .card,body.light .sc,body.light .modal{
+  box-shadow:0 1px 0 rgba(17,24,39,.04),0 10px 30px rgba(17,24,39,.04);
+}
+body.light .summary-card,body.light .kpi-card,body.light .toolbar-block,body.light .sb-stat,body.light .report-kpi,body.light .report-day,body.light .hdr-badge{
+  box-shadow:0 1px 0 rgba(17,24,39,.03),0 8px 22px rgba(17,24,39,.03);
 }
 .logo{font-family:var(--mono);font-weight:600;font-size:.95rem;display:flex;align-items:center;gap:6px;white-space:nowrap;}
 .logo-mark{width:24px;height:24px;border-radius:5px;background:var(--acc);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--bg);font-weight:800;}
@@ -159,14 +167,16 @@ thead .tc-time{z-index:30;}
 .tc-time.on-hr{color:var(--tx2);}
 .hour-lbl{display:block;padding-top:3px;}
 .th-corner{background:var(--s1);border-bottom:2px solid var(--acc);border-right:1px solid var(--bd);min-width:56px;width:56px;}
-.th-day{background:var(--s1);padding:7px 8px;font-size:.66rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-bottom:2px solid;border-right:1px solid var(--bd);text-align:center;white-space:nowrap;}
+.th-day{background:linear-gradient(180deg,rgba(255,255,255,.03),var(--s1));padding:7px 8px;font-size:.66rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-bottom:2px solid;border-right:1px solid var(--bd);text-align:center;white-space:nowrap;}
 .th-day:last-child{border-right:none;}
-.th-day-sub{font-family:var(--mono);font-size:.54rem;font-weight:400;opacity:.45;display:block;margin-top:1px;}
+.th-day-sub{font-family:var(--mono);font-size:.54rem;font-weight:500;opacity:.72;display:block;margin-top:1px;}
 .day-acts{display:inline-flex;gap:1px;margin-left:4px;vertical-align:middle;}
 .day-acts button{background:none;border:none;cursor:pointer;font-size:.56rem;padding:1px 3px;border-radius:3px;opacity:.35;transition:all .12s;}
 .day-acts button:hover{opacity:1;background:rgba(255,255,255,.08);}
+body.light .day-acts button:hover{background:rgba(0,0,0,.08);}
 .day-acts button.d:hover{color:var(--red);}
-.th-ap{background:var(--s2);padding:4px 7px;font-size:.58rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--teal);border-bottom:1px solid var(--bd);border-right:1px solid var(--bd);white-space:nowrap;min-width:128px;position:relative;cursor:grab;}
+.th-ap{background:linear-gradient(180deg,rgba(41,217,194,.08),var(--s2));padding:4px 7px;font-size:.58rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--teal);border-bottom:1px solid var(--bd);border-right:1px solid var(--bd);white-space:nowrap;min-width:128px;position:relative;cursor:grab;}
+body.light .th-ap{background:linear-gradient(180deg,rgba(15,155,134,.12),var(--s2));}
 .th-ap-inner{display:block;padding-right:30px;font-size:.58rem;}
 .th-ap-cap{font-size:.53rem;color:var(--tx3);display:block;margin-top:1px;font-weight:400;}
 .th-ap-free{font-size:.5rem;color:var(--teal);font-weight:500;display:block;margin-top:1px;font-family:var(--mono);}
@@ -180,8 +190,8 @@ thead .tc-time{z-index:30;}
 .filter-btn-wrap{max-width:140px;overflow:hidden;}
 .tbtn.active-filter{max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .tc{border-right:1px solid rgba(44,46,56,.4);border-bottom:1px solid rgba(44,46,56,.3);vertical-align:top;position:relative;min-width:128px;background:transparent;transition:background .1s;}
-.tc.on-hr-row{border-top:1px solid var(--bd);background:rgba(255,255,255,.018);}
-body.light .tc.on-hr-row{background:rgba(0,0,0,.025);}
+.tc.on-hr-row{border-top:1px solid var(--bd);background:rgba(255,255,255,.028);}
+body.light .tc.on-hr-row{background:rgba(43,37,28,.055);}
 /* time ruler line — shown via JS on mousemove over table-wrap */
 #time-ruler{position:absolute;left:0;right:0;height:1px;background:var(--acc);opacity:.7;pointer-events:none;z-index:15;display:none;}
 #time-ruler::before{content:attr(data-h);position:absolute;left:2px;top:-9px;font-family:var(--mono);font-size:.56rem;color:var(--acc);background:var(--bg);padding:0 3px;border-radius:3px;white-space:nowrap;}
@@ -191,15 +201,17 @@ body.light .tc.on-hr-row{background:rgba(0,0,0,.025);}
 .tc.day-sep{border-right:1px solid var(--bd)!important;}
 .tc.out-range{background:repeating-linear-gradient(135deg,transparent,transparent 4px,rgba(0,0,0,.07) 4px,rgba(0,0,0,.07) 8px);cursor:not-allowed;}
 body.light .tc.out-range{background:repeating-linear-gradient(135deg,transparent,transparent 4px,rgba(0,0,0,.04) 4px,rgba(0,0,0,.04) 8px);}
-.tc.cap-full{background:rgba(240,82,82,.04);}
-.tc.drag-over{background:rgba(200,241,53,.07);outline:1.5px dashed rgba(200,241,53,.45);outline-offset:-2px;}
-.tc.cell-hover{background:rgba(200,241,53,.04);}
+.tc.cap-full{background:rgba(240,82,82,.07);}
+body.light .tc.cap-full{background:rgba(197,58,58,.09);}
+.tc.drag-over{background:rgba(200,241,53,.12);outline:1.5px dashed rgba(200,241,53,.55);outline-offset:-2px;}
+.tc.cell-hover{background:rgba(200,241,53,.08);}
+body.light .tc.drag-over{background:rgba(47,143,31,.11);outline-color:rgba(47,143,31,.45);}
+body.light .tc.cell-hover{background:rgba(47,143,31,.07);}
 .tc.dimmed .blk{opacity:.12!important;}
 .blk.dimmed-blk{opacity:.12!important;}
-/* tiny block: hide secondary text */
-.blk.blk-tiny .blk-teacher,.blk.blk-tiny .blk-dur,.blk.blk-tiny .blk-note{display:none;}
+/* tiny block */
+.blk.blk-tiny .blk-teacher,.blk.blk-tiny .blk-time,.blk.blk-tiny .blk-note{display:none;}
 .blk.blk-tiny .blk-name{font-size:.58rem;}
-/* free-slot cap in ap header */
 .th-ap-free{font-size:.5rem;color:var(--teal);font-weight:500;display:block;margin-top:1px;font-family:var(--mono);}
 /* cell-click popover */
 .cell-pop{position:fixed;z-index:500;background:var(--s1);border:1px solid var(--bd);border-radius:var(--r2);padding:10px;min-width:180px;max-width:230px;box-shadow:0 8px 24px rgba(0,0,0,.35);animation:mIn .13s ease;}
@@ -219,20 +231,20 @@ body.light .tc.out-range{background:repeating-linear-gradient(135deg,transparent
 .th-day{cursor:grab;}
 .th-day.day-drag-over{outline:2px dashed var(--acc);outline-offset:-3px;}
 
-/* ── BLOCK ── */
-.blk{position:absolute;inset:1px 1px 0;border-radius:5px;padding:3px 5px;border-left:3px solid transparent;display:flex;flex-direction:column;overflow:hidden;cursor:grab;transition:box-shadow .12s,opacity .12s;}
-.blk:hover{box-shadow:0 3px 14px rgba(0,0,0,.5);}
-.blk.dragging-blk{opacity:.35;cursor:grabbing;}
-.blk-name{font-size:.66rem;font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.blk-teacher{font-family:var(--mono);font-size:.55rem;opacity:.6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.blk-dur{font-family:var(--mono);font-size:.53rem;opacity:.48;margin-top:1px;}
-.blk-note{font-size:.55rem;opacity:.58;font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;}
+/* ── BLOCK — solid Notion Calendar style ── */
+.blk{position:absolute;inset:1px 1px 0;border-radius:6px;padding:3px 6px 3px 8px;border:none;display:flex;flex-direction:column;overflow:hidden;cursor:grab;transition:filter .1s,opacity .12s,box-shadow .1s;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 8px 18px rgba(0,0,0,.18);}
+.blk:hover{filter:brightness(1.05);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 10px 22px rgba(0,0,0,.24);}
+.blk.dragging-blk{opacity:.4;cursor:grabbing;}
+.blk-name{font-size:.67rem;font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.blk-teacher{font-size:.56rem;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;}
+.blk-time{font-family:var(--mono);font-size:.52rem;opacity:.8;margin-top:auto;padding-top:2px;white-space:nowrap;}
+.blk-note{font-size:.55rem;opacity:.8;font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;}
 .blk-acts{position:absolute;top:2px;right:2px;display:flex;gap:2px;opacity:0;transition:opacity .11s;}
 .blk:hover .blk-acts{opacity:1;}
-.blk-act{background:rgba(0,0,0,.48);border:none;cursor:pointer;color:inherit;font-size:.56rem;padding:2px 3px;border-radius:3px;}
-.blk-act:hover{background:rgba(0,0,0,.72);}
-.blk.conflict{outline:1.5px solid var(--yel);outline-offset:-2px;}
-.blk-stack{position:absolute;bottom:2px;right:4px;font-family:var(--mono);font-size:.52rem;opacity:.6;}
+.blk-act{background:rgba(0,0,0,.22);border:none;cursor:pointer;color:inherit;font-size:.56rem;padding:2px 3px;border-radius:3px;}
+.blk-act:hover{background:rgba(0,0,0,.38);}
+.blk.conflict{box-shadow:0 0 0 2px #ffd700 inset;}
+.blk-stack{position:absolute;bottom:2px;right:4px;font-family:var(--mono);font-size:.52rem;opacity:.8;}
 .sidebar{border-left:1px solid var(--bd);background:var(--s1);display:flex;flex-direction:column;min-height:0;height:100%;}
 .sb-head{padding:10px 12px 7px;border-bottom:1px solid var(--bd);flex-shrink:0;}
 .sb-head h3{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.9px;color:var(--acc);margin-bottom:2px;}
@@ -365,6 +377,159 @@ body.readonly .toolbar .tbtn:not(.allow-readonly){pointer-events:none;opacity:.3
   .view{display:flex!important;}
 }
 .snap .day-acts,.snap .th-ap-acts,.snap .blk-acts{display:none!important;}
+.export-stage{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:auto;background:var(--bg);padding:24px;}
+.export-stage .export-sheet{display:inline-block;background:var(--bg);padding:18px;border-radius:18px;}
+.export-stage .table-wrap{overflow:visible!important;height:auto!important;background:transparent;}
+.export-stage .table-zoom{width:auto!important;height:auto!important;}
+.export-stage table{transform:none!important;}
+.export-stage thead tr:first-child th,.export-stage thead tr:nth-child(2) th,.export-stage .tc-time{position:static!important;}
+.conf-row{padding:5px 0;gap:8px;align-items:flex-start;justify-content:space-between;}
+.conf-row::before{content:'⚠';margin-top:1px;}
+.conf-row.ignored{color:var(--tx2);}
+.conf-row-main{flex:1;min-width:0;line-height:1.45;cursor:pointer;}
+.conf-row-status{display:inline-block;margin-right:6px;font-family:var(--mono);font-size:.55rem;padding:1px 5px;border-radius:999px;border:1px solid currentColor;vertical-align:middle;}
+.conf-row.ignored .conf-row-status{color:var(--tx2);}
+.conf-row-acts{display:flex;gap:5px;flex-shrink:0;}
+.conf-btn{background:transparent;border:1px solid currentColor;color:inherit;border-radius:999px;padding:2px 7px;font-family:var(--mono);font-size:.58rem;cursor:pointer;transition:all .12s;}
+.conf-btn:hover{background:rgba(240,180,41,.08);}
+.conf-row.ignored .conf-btn:hover{background:rgba(148,152,168,.08);}
+.tc.jump-target{box-shadow:inset 0 0 0 2px var(--acc),0 0 0 2px rgba(200,241,53,.16);}
+body.light .tc.jump-target{box-shadow:inset 0 0 0 2px var(--acc),0 0 0 2px rgba(47,143,31,.14);}
+body.readonly .edit-only,body.readonly #nb-groups,body.readonly .undo-grp,body.readonly .blk-acts,body.readonly .day-acts,body.readonly .th-ap-acts,body.readonly .approval-only{display:none!important;}
+body.readonly .club-name{pointer-events:none;cursor:default;opacity:.9;}
+.hdr{height:auto;min-height:64px;padding:12px 16px;align-items:flex-start;gap:12px;}
+.brand{display:flex;flex-direction:column;gap:2px;min-width:max-content;}
+.brand-tag{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3);}
+.club-name{padding:7px 10px;border:1px solid var(--bd);border-radius:999px;background:var(--s2);font-size:.65rem;color:var(--tx2);align-self:center;}
+.club-name:hover{border-color:var(--bd2);background:var(--s3);}
+.nav{margin-left:0;padding:4px;background:var(--s2);border:1px solid var(--bd);border-radius:999px;}
+.nb{padding:7px 12px;border-radius:999px;}
+.hdr-right{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:8px;min-width:max-content;}
+.status-row,.hdr-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
+.hdr-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px solid var(--bd);background:var(--s2);font-family:var(--mono);font-size:.62rem;color:var(--tx2);}
+.save-badge.ok{color:var(--teal);border-color:rgba(41,217,194,.28);}
+.save-badge.saving{color:var(--yel);border-color:rgba(240,180,41,.28);}
+.save-badge.err{color:var(--red);border-color:rgba(240,82,82,.28);}
+.mode-badge.readonly{color:#5ba3ff;border-color:rgba(91,163,255,.28);background:rgba(91,163,255,.08);}
+.mode-badge.edit{color:var(--teal);border-color:rgba(41,217,194,.28);background:rgba(41,217,194,.08);}
+.conf-pill{padding:6px 10px;}
+.auth-btn,.ubtn{padding:6px 10px;border-radius:999px;}
+.install-btn[hidden]{display:none!important;}
+.summary-strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;padding:12px 14px 10px;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent);border-bottom:1px solid var(--bd);}
+.summary-card,.kpi-card{background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:12px 14px;min-width:0;}
+.summary-card span,.kpi-card span{display:block;font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3);margin-bottom:6px;}
+.summary-card strong,.kpi-card strong{display:block;font-size:1rem;font-weight:800;color:var(--tx);}
+.summary-card small,.kpi-card small{display:block;margin-top:4px;font-size:.64rem;color:var(--tx2);}
+.summary-card.alert,.kpi-card.alert{border-color:rgba(240,180,41,.24);background:rgba(240,180,41,.05);}
+.toolbar{padding:10px 14px;gap:10px;background:var(--bg);border-bottom:none;}
+.toolbar-block{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:8px 10px;border:1px solid var(--bd);border-radius:16px;background:var(--s1);}
+.toolbar-edit{flex:1 1 320px;}
+.toolbar-label{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.12em;color:var(--tx3);margin-right:2px;}
+.toolbar .tbtn{background:var(--s2);}
+.toolbar .tbtn.pri{background:var(--acc);}
+.sched-layout{grid-template-columns:minmax(0,1fr) 280px;}
+.conf-strip{margin:0 14px 12px;border:1px solid rgba(240,180,41,.18);border-radius:16px;max-height:0;background:rgba(240,180,41,.05);}
+.conf-strip.open{max-height:340px;}
+.conf-strip-inner{padding:12px 14px;}
+.conf-strip-hdr{margin-bottom:10px;}
+.conf-list{gap:8px;max-height:255px;}
+.conf-group{display:flex;flex-direction:column;gap:6px;}
+.conf-group-title{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--tx3);padding-top:4px;}
+.conf-row-note{margin-top:6px;font-size:.62rem;color:var(--tx2);line-height:1.5;}
+.conf-row-meta{display:block;margin-top:4px;font-family:var(--mono);font-size:.56rem;color:var(--tx3);}
+.sidebar{background:linear-gradient(180deg,var(--s1),rgba(255,255,255,.01));}
+.sb-head{padding:16px 16px 10px;}
+.sb-head h3{font-size:.68rem;}
+.sb-head p{font-size:.66rem;line-height:1.5;}
+.sb-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:0 16px 14px;}
+.sb-stat{padding:9px 10px;border:1px solid var(--bd);border-radius:14px;background:var(--bg);}
+.sb-stat strong{display:block;font-size:.88rem;font-weight:800;color:var(--tx);}
+.sb-stat span{display:block;font-size:.62rem;color:var(--tx2);margin-top:3px;}
+.sb-pills{padding:12px 16px 16px;gap:8px;}
+.sb-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:12px;}
+.sb-side-btn{display:flex;align-items:center;justify-content:center;padding:9px 10px;border:1px solid var(--bd);border-radius:12px;background:var(--s2);color:var(--tx2);font-size:.68rem;font-weight:700;cursor:pointer;transition:all .12s;}
+.sb-side-btn:hover{border-color:var(--bd2);color:var(--tx);background:var(--s3);}
+.sb-filter-chip{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;border-radius:12px;background:rgba(91,163,255,.08);border:1px solid rgba(91,163,255,.22);font-size:.66rem;color:#5ba3ff;margin-bottom:12px;}
+.sb-filter-chip button{border:none;background:none;color:inherit;cursor:pointer;font-family:var(--mono);font-size:.58rem;}
+.sb-note{padding:12px;border:1px dashed var(--bd);border-radius:14px;color:var(--tx2);font-size:.67rem;line-height:1.6;background:rgba(255,255,255,.02);}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:14px;}
+.stats-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px;}
+.v-stats{padding:22px;}
+.sg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+.sg.two{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);margin-top:14px;}
+.sc{background:var(--s1);border:1px solid var(--bd);border-radius:18px;padding:16px;}
+.sc h4{font-size:.64rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--tx3);margin-bottom:12px;}
+.report-modal{padding:18px;border-radius:20px;}
+.report-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:12px;}
+.report-eyebrow{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.14em;color:var(--tx3);margin-bottom:6px;}
+.report-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
+.report-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px;}
+.report-kpi{padding:12px;border-radius:14px;border:1px solid var(--bd);background:var(--bg);}
+.report-kpi strong{display:block;font-size:.92rem;font-weight:800;}
+.report-kpi span{display:block;font-size:.62rem;color:var(--tx2);margin-top:4px;}
+.report-days{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;}
+.report-day{border:1px solid var(--bd);background:var(--bg);border-radius:16px;padding:10px;}
+.report-day-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--bd);}
+.report-day-head strong{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;}
+.report-day-head span{font-family:var(--mono);font-size:.58rem;color:var(--tx3);}
+.report-item{padding:9px 10px;border-radius:12px;border:1px solid var(--bd);background:var(--s2);margin-bottom:8px;}
+.report-item:last-child{margin-bottom:0;}
+.report-item-row{display:flex;align-items:flex-start;gap:8px;}
+.report-item-time{font-family:var(--mono);font-size:.7rem;font-weight:700;min-width:44px;}
+.report-item-main{min-width:0;flex:1;}
+.report-item-title{font-size:.72rem;font-weight:700;line-height:1.3;}
+.report-item-meta{font-size:.62rem;color:inherit;opacity:.82;line-height:1.5;margin-top:2px;}
+.report-item-note{font-size:.6rem;opacity:.75;font-style:italic;margin-top:5px;}
+@media (max-width:1100px){
+  .hdr{height:auto;padding:10px 12px;flex-wrap:wrap;}
+  .nav{order:3;width:100%;overflow:auto;padding-bottom:2px;}
+  .hdr-right{width:100%;justify-content:flex-end;flex-wrap:wrap;}
+  .summary-strip,.stats-kpis{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .sched-layout{grid-template-columns:1fr;}
+  .sidebar{border-left:none;border-top:1px solid var(--bd);max-height:170px;}
+  .sb-meta{grid-template-columns:repeat(4,minmax(0,1fr));}
+  .sb-pills{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;}
+  .pill,.sb-empty{min-width:190px;}
+  .groups-grid,.sg,.sg.two{grid-template-columns:1fr;}
+  .report-days{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media (max-width:820px){
+  .toolbar{padding:8px 10px;gap:5px;}
+  .tsep{display:none;}
+  .nav{scrollbar-width:none;}
+  .nav::-webkit-scrollbar{display:none;}
+  .nb{flex:0 0 auto;}
+  .hdr-right{width:100%;justify-content:space-between;gap:8px;}
+  .status-row,.hdr-actions{width:100%;justify-content:space-between;}
+  .summary-strip,.stats-kpis,.sb-meta,.report-days{grid-template-columns:1fr;}
+  .toolbar-block{width:100%;}
+  .dur-grp,.zoom-grp{width:100%;justify-content:space-between;}
+  .filter-btn-wrap,.tbtn.active-filter{max-width:none;}
+  .sidebar{max-height:none;}
+  .sb-pills{padding:10px;display:flex;flex-direction:column;overflow:auto;}
+  .pill,.sb-empty{min-width:0;}
+  .v-stats,.v-groups{padding:14px;}
+  .modal{width:min(94vw,320px);}
+  #modal-tsched .modal,#modal-gsched .modal{width:min(96vw,900px);padding:14px;}
+  .table-wrap{min-height:54vh;}
+  .conf-strip.open{max-height:260px;}
+  .conf-row{flex-direction:column;}
+  .conf-row-acts{width:100%;justify-content:flex-end;}
+  .report-head{flex-direction:column;}
+  .report-actions{width:100%;justify-content:flex-start;}
+  .sb-actions{grid-template-columns:1fr 1fr;}
+}
+@media (max-width:640px){
+  .readonly-bar{padding:7px 10px;line-height:1.4;}
+  .toolbar{padding:8px;gap:6px;}
+  .club-name{width:100%;text-align:center;}
+  .th-corner,.tc-time{width:48px;min-width:48px;}
+  .th-day{padding:6px 5px;font-size:.58rem;}
+  .th-ap{min-width:112px;padding:4px 6px;}
+  .th-ap-inner{padding-right:24px;font-size:.55rem;}
+  .table-wrap{min-height:48vh;}
+  .sb-actions{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
@@ -372,66 +537,105 @@ body.readonly .toolbar .tbtn:not(.allow-readonly){pointer-events:none;opacity:.3
 
 <!-- HEADER -->
 <header class="hdr">
-  <div class="logo">
-    <div class="logo-mark">G</div>
-    Gym<em>Rotate</em>
+  <div class="brand">
+    <div class="logo">
+      <div class="logo-mark">G</div>
+      Gym<em>Rotate</em>
+    </div>
+    <span class="brand-tag">Planificador de rotaciones</span>
   </div>
   <span class="club-name" id="club-name-lbl" onclick="openModal('modal-club')" title="Editar nombre del club">—</span>
   <nav class="nav">
     <button class="nb on" id="nb-sched" onclick="showView('sched',this)">Horarios</button>
     <button class="nb" id="nb-stats" onclick="showView('stats',this)">Estadísticas</button>
-    <button class="nb" id="nb-groups" onclick="showView('groups',this)">Grupos</button>
+    <button class="nb edit-only" id="nb-groups" onclick="showView('groups',this)">Grupos</button>
   </nav>
   <div class="hdr-right">
-    <span class="sync-dot" id="sync-dot" title="Estado de sincronización"></span>
-    <button class="auth-btn" id="auth-btn" onclick="openAuthModal()">Iniciar sesión</button>
-    <button class="ubtn" id="theme-btn" onclick="toggleTheme()" title="Cambiar tema">🌙</button>
-    <button class="conf-pill" id="conf-pill" onclick="toggleConf()"><span id="conf-pill-txt"></span></button>
-    <div class="undo-grp">
-      <button class="ubtn" id="btn-undo" disabled onclick="undo()" title="Ctrl+Z">↩</button>
-      <button class="ubtn" id="btn-redo" disabled onclick="redo()" title="Ctrl+Y">↪</button>
+    <div class="status-row">
+      <div class="hdr-badge save-badge" id="save-badge">
+        <span class="sync-dot" id="sync-dot" title="Estado de sincronización"></span>
+        <span id="save-status-txt">Sin conexión</span>
+      </div>
+      <div class="hdr-badge mode-badge readonly" id="mode-badge">Solo lectura</div>
+      <button class="conf-pill" id="conf-pill" onclick="toggleConf()"><span id="conf-pill-txt"></span></button>
+    </div>
+    <div class="hdr-actions">
+      <button class="auth-btn install-btn allow-readonly" id="install-btn" onclick="triggerInstall()">Instalar app</button>
+      <button class="auth-btn" id="auth-btn" onclick="openAuthModal()">Iniciar sesión</button>
+      <button class="ubtn" id="theme-btn" onclick="toggleTheme()" title="Cambiar tema">Tema</button>
+      <div class="undo-grp">
+        <button class="ubtn" id="btn-undo" disabled onclick="undo()" title="Ctrl+Z">↩</button>
+        <button class="ubtn" id="btn-redo" disabled onclick="redo()" title="Ctrl+Y">↪</button>
+      </div>
     </div>
   </div>
 </header>
 
 <!-- SCHEDULE VIEW -->
 <div class="view on" id="view-sched">
-  <div id="readonly-bar" class="readonly-bar">👁 Modo lectura — iniciá sesión para editar</div>
+  <div id="readonly-bar" class="readonly-bar">Modo lectura. Iniciá sesión para editar.</div>
   <div class="sched-layout">
     <div class="sched-main">
-      <!-- toolbar -->
+      <div class="summary-strip" id="sched-summary">
+        <div class="summary-card">
+          <span>Días</span>
+          <strong id="sum-days">0</strong>
+          <small>rango configurado</small>
+        </div>
+        <div class="summary-card">
+          <span>Grupos</span>
+          <strong id="sum-groups">0</strong>
+          <small>activos</small>
+        </div>
+        <div class="summary-card">
+          <span>Profesores</span>
+          <strong id="sum-teachers">0</strong>
+          <small>asignados</small>
+        </div>
+        <div class="summary-card">
+          <span>Horas</span>
+          <strong id="sum-hours">0h</strong>
+          <small id="sum-hours-sub">0 bloques</small>
+        </div>
+        <div class="summary-card alert">
+          <span>Conflictos</span>
+          <strong id="sum-conflicts">0</strong>
+          <small id="sum-conflicts-sub">sin pendientes</small>
+        </div>
+      </div>
       <div class="toolbar">
-        <div class="tg">
+        <div class="toolbar-block">
+          <span class="toolbar-label">Consulta</span>
+          <button class="tbtn allow-readonly" onclick="openModal('modal-gview')">Vista grupo</button>
+          <button class="tbtn allow-readonly" onclick="openModal('modal-tview')">Vista profe</button>
+          <button class="tbtn allow-readonly" onclick="openModal('modal-export')">Exportar</button>
+        </div>
+        <div class="toolbar-block">
+          <span class="toolbar-label">Salida</span>
+          <button class="tbtn allow-readonly" id="filter-btn" onclick="openFilterMenu()" title="Filtrar por grupo o profe">Filtrar</button>
+          <button class="tbtn allow-readonly" onclick="openExportDays('png')">PNG</button>
+          <button class="tbtn allow-readonly" onclick="openExportDays('pdf')">PDF</button>
+        </div>
+        <div class="toolbar-block">
+          <span class="toolbar-label">Visual</span>
+          <div class="zoom-grp">
+            <label>Zoom</label>
+            <input type="range" id="zoom-sl" min="40" max="100" value="100" oninput="setZoom(this.value)">
+            <span class="zoom-val" id="zoom-val">100%</span>
+          </div>
+        </div>
+        <div class="toolbar-block edit-only toolbar-edit">
+          <span class="toolbar-label">Edición</span>
           <button class="tbtn pri" onclick="openModal('modal-day')">+ Día</button>
           <button class="tbtn" onclick="openModal('modal-ap')">+ Aparato</button>
-        </div>
-        <div class="tsep"></div>
-        <div class="tg">
           <button class="tbtn" onclick="openModal('modal-copy')">Copiar día</button>
           <button class="tbtn" onclick="openModal('modal-tpl')">Plantillas</button>
-        </div>
-        <div class="tsep"></div>
-        <div class="dur-grp">
-          <label>Dur.</label>
-          <input class="dur-inp" id="dur-inp" type="number" value="30" min="10" max="480" step="10">
-          <span class="dur-unit">min</span>
-        </div>
-        <div class="tsep"></div>
-        <div class="zoom-grp">
-          <label>Zoom</label>
-          <input type="range" id="zoom-sl" min="40" max="100" value="100" oninput="setZoom(this.value)">
-          <span class="zoom-val" id="zoom-val">100%</span>
-        </div>
-        <div class="tsep"></div>
-        <!-- filter -->
-        <button class="tbtn" id="filter-btn" onclick="openFilterMenu()" title="Filtrar por grupo">🔍 Filtrar</button>
-        <div class="tsep"></div>
-        <div class="tg" style="margin-left:auto">
-          <button class="tbtn" onclick="openModal('modal-gview')">Vista grupo</button>
-          <button class="tbtn" onclick="openModal('modal-export')">Exportar</button>
-          <button class="tbtn" onclick="exportPNG()">PNG</button>
-          <button class="tbtn" onclick="exportPDF()">PDF</button>
-          <button class="tbtn danger" onclick="clearAll()">Limpiar</button>
+          <div class="dur-grp">
+            <label>Dur.</label>
+            <input class="dur-inp" id="dur-inp" type="number" value="30" min="5" max="480" step="5">
+            <span class="dur-unit">min</span>
+          </div>
+          <button class="tbtn danger edit-only" onclick="clearAll()">Limpiar</button>
         </div>
       </div>
       <!-- conflict strip -->
@@ -450,9 +654,10 @@ body.readonly .toolbar .tbtn:not(.allow-readonly){pointer-events:none;opacity:.3
     <!-- sidebar -->
     <div class="sidebar">
       <div class="sb-head">
-        <h3>Grupos</h3>
-        <p>Arrastrá al horario · click para filtrar</p>
+        <h3 id="sb-title">Biblioteca de grupos</h3>
+        <p id="sb-sub">Arrastrá al horario o usalos como filtro.</p>
       </div>
+      <div class="sb-meta" id="sb-meta"></div>
       <div class="sb-pills" id="sb-pills">
         <div class="sb-empty"><span class="ico">🤸</span>Sin grupos aún.<br>Creá uno en Grupos.</div>
       </div>
@@ -463,15 +668,41 @@ body.readonly .toolbar .tbtn:not(.allow-readonly){pointer-events:none;opacity:.3
 <!-- STATS VIEW -->
 <div class="view" id="view-stats">
   <div class="v-stats">
-    <h1>Estadísticas</h1>
-    <p class="vsub">Datos del horario actual.</p>
+    <div class="section-head">
+      <div>
+        <h1>Estadísticas</h1>
+        <p class="vsub">Panel ejecutivo del horario actual.</p>
+      </div>
+    </div>
+    <div class="stats-kpis">
+      <div class="kpi-card">
+        <span>Horas totales</span>
+        <strong id="st-sum-hours">0h</strong>
+        <small id="st-sum-hours-sub">0 bloques</small>
+      </div>
+      <div class="kpi-card">
+        <span>Profesores</span>
+        <strong id="st-sum-teachers">0</strong>
+        <small>con carga</small>
+      </div>
+      <div class="kpi-card">
+        <span>Grupos</span>
+        <strong id="st-sum-groups">0</strong>
+        <small>con actividad</small>
+      </div>
+      <div class="kpi-card alert">
+        <span>Conflictos</span>
+        <strong id="st-sum-conflicts">0</strong>
+        <small id="st-sum-conflicts-sub">sin pendientes</small>
+      </div>
+    </div>
     <div class="sg">
-      <div class="sc"><h4>Horas por Grupo</h4><div id="st-g"></div></div>
-      <div class="sc"><h4>Horas por Profesor</h4><div id="st-t"></div></div>
+      <div class="sc"><h4>Carga por Grupo</h4><div id="st-g"></div></div>
+      <div class="sc"><h4>Carga por Profesor/a</h4><div id="st-t"></div></div>
       <div class="sc"><h4>Uso de Aparatos</h4><div id="st-a"></div></div>
     </div>
     <div class="sg two">
-      <div class="sc"><h4>Conflictos</h4><div id="st-c"></div></div>
+      <div class="sc"><h4>Conflictos y decisiones</h4><div id="st-c"></div></div>
       <div class="sc"><h4>Resumen por Día</h4><div id="st-d"></div></div>
     </div>
   </div>
@@ -533,7 +764,7 @@ body.readonly .toolbar .tbtn:not(.allow-readonly){pointer-events:none;opacity:.3
 <div class="overlay" id="modal-edit-block">
   <div class="modal" style="width:290px">
     <h4 id="eblk-title">Editar bloque</h4>
-    <div class="frow"><label>Duración (minutos)</label><input class="fi" id="eblk-dur" type="number" min="10" max="480" step="10"></div>
+    <div class="frow"><label>Duración (minutos)</label><input class="fi" id="eblk-dur" type="number" min="5" max="480" step="5"></div>
     <div class="frow"><label>Nota</label><textarea class="fi" id="eblk-note" placeholder="Ej: Evaluación, clase abierta…"></textarea></div>
     <div class="mbtns">
       <button class="btn-sec" onclick="closeModals()">Cancelar</button>
@@ -547,8 +778,8 @@ body.readonly .toolbar .tbtn:not(.allow-readonly){pointer-events:none;opacity:.3
   <div class="modal" style="width:290px">
     <h4>Agregar día</h4>
     <div class="frow"><label>Nombre</label><input class="fi" id="day-nm" type="text" placeholder="Ej: Lunes" onkeydown="if(event.key==='Enter')confirmAddDay()"></div>
-    <div class="frow"><label>Inicio</label><input class="fi" id="day-st" type="time" value="15:00"></div>
-    <div class="frow"><label>Fin</label><input class="fi" id="day-en" type="time" value="21:00"></div>
+    <div class="frow"><label>Inicio</label><input class="fi" id="day-st" type="time" value="15:00" step="300"></div>
+    <div class="frow"><label>Fin</label><input class="fi" id="day-en" type="time" value="21:00" step="300"></div>
     <div class="mbtns">
       <button class="btn-sec" onclick="closeModals()">Cancelar</button>
       <button class="btn-main" onclick="confirmAddDay()">Agregar</button>
@@ -561,8 +792,8 @@ body.readonly .toolbar .tbtn:not(.allow-readonly){pointer-events:none;opacity:.3
   <div class="modal" style="width:290px">
     <h4>Editar día</h4>
     <div class="frow"><label>Nombre</label><input class="fi" id="ed-nm" type="text"></div>
-    <div class="frow"><label>Inicio</label><input class="fi" id="ed-st" type="time"></div>
-    <div class="frow"><label>Fin</label><input class="fi" id="ed-en" type="time"></div>
+    <div class="frow"><label>Inicio</label><input class="fi" id="ed-st" type="time" step="300"></div>
+    <div class="frow"><label>Fin</label><input class="fi" id="ed-en" type="time" step="300"></div>
     <div class="mbtns">
       <button class="btn-sec" onclick="closeModals()">Cancelar</button>
       <button class="btn-main" onclick="confirmEditDay()">Guardar</button>
@@ -633,12 +864,30 @@ body.readonly .toolbar .tbtn:not(.allow-readonly){pointer-events:none;opacity:.3
     <div class="exp-btns">
       <button class="exp-btn" onclick="exportCSV()"><span class="ico">📄</span><div><div class="lbl">CSV</div><span class="sub">Excel / Google Sheets</span></div></button>
       <button class="exp-btn" onclick="exportICal()"><span class="ico">📅</span><div><div class="lbl">iCal (.ics)</div><span class="sub">Google / Apple Calendar</span></div></button>
-      <button class="exp-btn" onclick="exportPDF()"><span class="ico">📋</span><div><div class="lbl">PDF</div><span class="sub">Tabla completa, lista para imprimir</span></div></button>
-      <button class="exp-btn" onclick="exportJSON()"><span class="ico">💾</span><div><div class="lbl">JSON backup</div><span class="sub">Backup para restaurar</span></div></button>
-      <button class="exp-btn" onclick="triggerImport()"><span class="ico">📂</span><div><div class="lbl">Importar JSON</div><span class="sub">Restaurar desde backup</span></div></button>
+      <button class="exp-btn" onclick="openExportDays('pdf')"><span class="ico">📋</span><div><div class="lbl">PDF</div><span class="sub">Elegí uno o varios días</span></div></button>
+      <button class="exp-btn" onclick="openExportDays('png')"><span class="ico">🖼️</span><div><div class="lbl">PNG</div><span class="sub">Exportá la grilla con los días elegidos</span></div></button>
+      <button class="exp-btn edit-only" onclick="exportJSON()"><span class="ico">💾</span><div><div class="lbl">JSON backup</div><span class="sub">Backup para restaurar</span></div></button>
+      <button class="exp-btn edit-only" onclick="triggerImport()"><span class="ico">📂</span><div><div class="lbl">Importar JSON</div><span class="sub">Restaurar desde backup</span></div></button>
     </div>
     <input type="file" id="import-file" accept=".json" style="display:none" onchange="importJSON(event)">
     <div class="mbtns" style="margin-top:9px"><button class="btn-sec" onclick="closeModals()">Cerrar</button></div>
+  </div>
+</div>
+
+<!-- PDF config modal -->
+<div class="overlay" id="modal-pdf-cfg">
+  <div class="modal" style="width:300px">
+    <h4 id="export-days-title">Exportar PDF</h4>
+    <p id="export-days-desc" style="font-size:.7rem;color:var(--tx2);margin-bottom:9px">Elegí qué días incluir en el PDF.</p>
+    <div id="pdf-day-list" style="display:flex;flex-direction:column;gap:5px;margin-bottom:11px"></div>
+    <div style="display:flex;gap:6px;margin-bottom:11px">
+      <button class="btn-sec" style="flex:1;font-size:.68rem" onclick="pdfDayToggleAll(true)">Todos</button>
+      <button class="btn-sec" style="flex:1;font-size:.68rem" onclick="pdfDayToggleAll(false)">Ninguno</button>
+    </div>
+    <div class="mbtns">
+      <button class="btn-sec" onclick="closeModals()">Cancelar</button>
+      <button class="btn-main" id="export-days-submit" onclick="exportSelectedDays()">Generar PDF</button>
+    </div>
   </div>
 </div>
 
@@ -654,18 +903,51 @@ body.readonly .toolbar .tbtn:not(.allow-readonly){pointer-events:none;opacity:.3
   </div>
 </div>
 
+<!-- Teacher view selector -->
+<div class="overlay" id="modal-tview">
+  <div class="modal" style="width:280px">
+    <h4>Horario por profesor/a</h4>
+    <div class="frow"><label>Profesor/a</label><select class="fi" id="tv-sel"></select></div>
+    <div class="mbtns">
+      <button class="btn-sec" onclick="closeModals()">Cancelar</button>
+      <button class="btn-main" onclick="openTeacherSched()">Ver</button>
+    </div>
+  </div>
+</div>
+
+<!-- Teacher schedule expanded -->
+<div class="overlay top" id="modal-tsched" style="padding:18px">
+  <div class="modal report-modal" style="width:min(860px,96vw);max-width:none">
+    <div class="report-head">
+      <div>
+        <div class="report-eyebrow">Vista por profesor/a</div>
+        <h4 id="ts-title" style="font-size:.96rem;margin-bottom:2px"></h4>
+        <p id="ts-sub" style="font-size:.68rem;color:var(--tx2)"></p>
+      </div>
+      <div class="report-actions">
+        <button class="tbtn" onclick="exportTeacherPDF()">PDF</button>
+        <button class="tbtn" onclick="exportTeacherPNG()">PNG</button>
+        <button class="btn-sec" onclick="closeModals()">Cerrar</button>
+      </div>
+    </div>
+    <div id="ts-content" style="overflow-x:auto"></div>
+  </div>
+</div>
+
 <!-- Group schedule expanded -->
 <div class="overlay top" id="modal-gsched" style="padding:18px">
-  <div class="modal" style="width:min(860px,96vw);max-width:none">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:13px;gap:10px">
+  <div class="modal report-modal" style="width:min(860px,96vw);max-width:none">
+    <div class="report-head">
       <div>
+        <div class="report-eyebrow">Vista por grupo</div>
         <h4 id="gs-title" style="font-size:.96rem;margin-bottom:2px"></h4>
         <p id="gs-sub" style="font-size:.68rem;color:var(--tx2)"></p>
       </div>
-      <div style="display:flex;gap:5px;flex-shrink:0">
-        <button class="tbtn" onclick="printGS()">🖨 Imprimir</button>
+      <div class="report-actions">
+        <button class="tbtn" onclick="exportGroupPDF()">PDF</button>
         <button class="tbtn" onclick="exportGroupPNG()">PNG</button>
-        <button class="btn-sec" onclick="closeModals()">✕</button>
+        <button class="tbtn" onclick="printGS()">Imprimir</button>
+        <button class="btn-sec" onclick="closeModals()">Cerrar</button>
       </div>
     </div>
     <div id="gs-content" style="overflow-x:auto"></div>
@@ -675,12 +957,31 @@ body.readonly .toolbar .tbtn:not(.allow-readonly){pointer-events:none;opacity:.3
 <!-- Filter menu -->
 <div class="overlay" id="modal-filter">
   <div class="modal" style="width:270px">
-    <h4>Filtrar por grupo</h4>
-    <p style="font-size:.7rem;color:var(--tx2);margin-bottom:10px">Resalta un grupo, opaca el resto.</p>
+    <h4>Filtrar horario</h4>
+    <p style="font-size:.7rem;color:var(--tx2);margin-bottom:10px">Resaltá por grupo o por profesor/a y opacá el resto.</p>
     <div id="filter-list" style="display:flex;flex-direction:column;gap:4px;max-height:240px;overflow-y:auto;margin-bottom:10px"></div>
     <div class="mbtns">
       <button class="btn-sec" onclick="clearFilter()">Sin filtro</button>
       <button class="btn-main" onclick="closeModals()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="modal-approval">
+  <div class="modal" style="width:min(420px,94vw)">
+    <h4>Aprobar excepción</h4>
+    <p id="approval-desc" style="font-size:.7rem;color:var(--tx2);margin-bottom:10px">Registrá por qué este conflicto queda aprobado como excepción.</p>
+    <div class="frow">
+      <label>Conflicto</label>
+      <div id="approval-conflict" class="sb-note" style="padding:10px 12px"></div>
+    </div>
+    <div class="frow">
+      <label>Motivo / contexto</label>
+      <textarea class="fi" id="approval-note" rows="4" placeholder="Ej: decisión pedagógica acordada con coordinación."></textarea>
+    </div>
+    <div class="mbtns">
+      <button class="btn-sec" onclick="closeModals()">Cancelar</button>
+      <button class="btn-main" onclick="submitConflictApproval()">Aprobar excepción</button>
     </div>
   </div>
 </div>
@@ -702,18 +1003,31 @@ let _isReadOnly=true;   // true until user signs in
 
 function setSyncDot(state){
   const d=document.getElementById('sync-dot');
+  const t=document.getElementById('save-status-txt');
+  const badge=document.getElementById('save-badge');
+  const label={ok:'Guardado',saving:'Guardando…',err:'Error de guardado','':'Sin nube'}[state]||'Sin nube';
   if(!d)return;
   d.className='sync-dot '+state;
   d.title={ok:'Sincronizado con la nube',saving:'Guardando…',err:'Error de sincronización','':'Sin conexión a la nube'}[state]||'';
+  if(t)t.textContent=label;
+  if(badge)badge.className='hdr-badge save-badge '+state;
 }
 
 function setReadOnly(ro){
   _isReadOnly=ro;
   document.body.classList.toggle('readonly',ro);
   const bar=document.getElementById('readonly-bar');
+  const modeBadge=document.getElementById('mode-badge');
   if(bar)bar.classList.toggle('show',ro);
+  if(modeBadge){
+    modeBadge.textContent=ro?'Solo lectura':'Edición';
+    modeBadge.className='hdr-badge mode-badge '+(ro?'readonly':'edit');
+  }
   // disable drag on pills and blocks when readonly
   document.querySelectorAll('.pill,.blk').forEach(el=>el.draggable=!ro);
+  if(ro&&document.getElementById('view-groups')?.classList.contains('on'))showView('sched',document.getElementById('nb-sched'));
+  renderSidebar();
+  renderScheduleSummary();
 }
 
 // Cloud save (debounced 800ms)
@@ -723,7 +1037,7 @@ function cloudSave(){
   _fbSaveTimer=setTimeout(async()=>{
     setSyncDot('saving');
     try{
-      const payload={groups,days,aparatos,schedule,clubName,savedAt:Date.now()};
+      const payload={groups,days,aparatos,schedule,clubName,ignoredConflicts,savedAt:Date.now()};
       await window._fb.setDoc(window._fb.SCHED_DOC,payload);
       setSyncDot('ok');
     }catch(e){
@@ -748,6 +1062,7 @@ function startCloudListener(){
     aparatos=d.aparatos||aparatos;
     schedule=d.schedule||schedule;
     clubName=d.clubName||clubName;
+    ignoredConflicts=normalizeConflictApprovals(d.ignoredConflicts||ignoredConflicts);
     // Also persist to localStorage
     _origSaveAll();
     invalidateCache();
@@ -760,6 +1075,41 @@ function startCloudListener(){
   });
 }
 let _lastLocalSave=0;
+function normalizeConflictApprovals(raw){
+  const out={};
+  Object.entries(raw||{}).forEach(([id,val])=>{
+    if(!val)return;
+    if(typeof val==='object'){
+      out[id]={
+        status:'approved',
+        note:String(val.note||'').trim(),
+        approvedBy:String(val.approvedBy||val.resolvedBy||'').trim(),
+        approvedAt:val.approvedAt||val.resolvedAt||'',
+      };
+      return;
+    }
+    out[id]={status:'approved',note:'',approvedBy:'',approvedAt:''};
+  });
+  return out;
+}
+function getConflictApproval(id){
+  const val=ignoredConflicts?.[id];
+  if(!val)return null;
+  return typeof val==='object'
+    ? {status:'approved',note:String(val.note||''),approvedBy:String(val.approvedBy||val.resolvedBy||''),approvedAt:val.approvedAt||val.resolvedAt||''}
+    : {status:'approved',note:'',approvedBy:'',approvedAt:''};
+}
+function isConflictApproved(id){return !!getConflictApproval(id);}
+function formatApprovalMeta(approval){
+  if(!approval)return '';
+  const by=approval.approvedBy?approval.approvedBy.split('@')[0]:'sin autor';
+  const when=approval.approvedAt?new Date(approval.approvedAt).toLocaleDateString('es-AR'):'sin fecha';
+  return `Aprobada por ${by} · ${when}`;
+}
+function formatApprovedExceptions(count){
+  if(!count)return 'sin excepciones aprobadas';
+  return count===1?'1 excepción aprobada':`${count} excepciones aprobadas`;
+}
 
 // ══════════════════════════════════════════════
 // STATE
@@ -785,9 +1135,11 @@ let aparatos = LS.load('gr4_aps',[
 let schedule  = LS.load('gr4_sched',{});
 let templates = LS.load('gr4_tpls',[]);
 let clubName  = LS.load('gr4_club','');
+let ignoredConflicts = normalizeConflictApprovals(LS.load('gr4_ignconf',{}));
 
 // ── FILTER ──
-let filterGid = null; // gid or null
+let filterType = null; // null | 'group' | 'teacher'
+let filterValue = null;
 
 // ── APARATO COL DRAG state (declared early, logic below) ──
 let apDragId = null;
@@ -801,14 +1153,15 @@ const MAX_UNDO=30;
 let undoStack=[],redoStack=[];
 let _noSnap=false;
 function snap(){
-  if(_noSnap)return;
-  if(_isReadOnly){toast('Iniciá sesión para editar','warn');return;}
+  if(_noSnap)return true;
+  if(_isReadOnly){toast('Iniciá sesión para editar','warn');return false;}
   undoStack.push(ser());
   if(undoStack.length>MAX_UNDO) undoStack.shift();
   redoStack=[];updUndoUI();
+  return true;
 }
-function ser(){return JSON.stringify({groups,days,aparatos,schedule});}
-function deser(s){const d=JSON.parse(s);groups=d.groups;days=d.days;aparatos=d.aparatos;schedule=d.schedule;}
+function ser(){return JSON.stringify({groups,days,aparatos,schedule,ignoredConflicts});}
+function deser(s){const d=JSON.parse(s);groups=d.groups;days=d.days;aparatos=d.aparatos;schedule=d.schedule;ignoredConflicts=normalizeConflictApprovals(d.ignoredConflicts||{});}
 function undo(){if(!undoStack.length)return;redoStack.push(ser());_noSnap=true;deser(undoStack.pop());_noSnap=false;saveAll();refreshAll();updUndoUI();toast('Deshecho');}
 function redo(){if(!redoStack.length)return;undoStack.push(ser());_noSnap=true;deser(redoStack.pop());_noSnap=false;saveAll();refreshAll();updUndoUI();toast('Rehecho');}
 function updUndoUI(){document.getElementById('btn-undo').disabled=!undoStack.length;document.getElementById('btn-redo').disabled=!redoStack.length;}
@@ -825,7 +1178,7 @@ document.addEventListener('keydown',e=>{
 // ══════════════════════════════════════════════
 let _gMap=null,_aMap=null,_dMap=null,_hourMapCache=null,_allHoursCache=null,_dayHoursCache=null;
 function invalidateCache(){_gMap=null;_aMap=null;_dMap=null;_hourMapCache=null;_allHoursCache=null;_dayHoursCache=null;}
-const _origSaveAll=()=>{LS.save('gr4_groups',groups);LS.save('gr4_days',days);LS.save('gr4_aps',aparatos);LS.save('gr4_sched',schedule);LS.save('gr4_tpls',templates);LS.save('gr4_club',clubName);};
+const _origSaveAll=()=>{LS.save('gr4_groups',groups);LS.save('gr4_days',days);LS.save('gr4_aps',aparatos);LS.save('gr4_sched',schedule);LS.save('gr4_tpls',templates);LS.save('gr4_club',clubName);LS.save('gr4_ignconf',ignoredConflicts);};
 function saveAll(){
   invalidateCache();
   _origSaveAll();
@@ -847,12 +1200,34 @@ let selColor=COLORS[0],editSelColor=COLORS[0],editGid=null;
 // ══════════════════════════════════════════════
 // UTILS
 // ══════════════════════════════════════════════
+const GRID_STEP_MIN=5;
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
 function rgba(hex,a){const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return `rgba(${r},${g},${b},${a})`;}
 function fmtT(m){if(!m)return '0';const h=Math.floor(m/60),mn=m%60;return h?`${h}h${mn?` ${mn}m`:''}` :`${mn}m`;}
 function addMins(hhmm,m){const[h,mn]=hhmm.split(':').map(Number),t=h*60+mn+m;return `${String(Math.floor(t/60)).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`;}
-function getDurInp(){return Math.max(10,Math.round((parseInt(document.getElementById('dur-inp').value)||30)/10)*10);}
-function toSlots(m){return Math.max(1,Math.round(m/10));}
+function normalizeDuration(m){return Math.max(GRID_STEP_MIN,Math.round((parseInt(m)||30)/GRID_STEP_MIN)*GRID_STEP_MIN);}
+function getDurInp(){return normalizeDuration(document.getElementById('dur-inp').value);}
+function toSlots(m){return Math.max(1,Math.ceil((m||GRID_STEP_MIN)/GRID_STEP_MIN));}
+function slugify(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/gi,'-').replace(/^-+|-+$/g,'').toLowerCase()||'item';}
+function escapeHtml(v){return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function jsArg(v){return JSON.stringify(String(v)).replace(/"/g,'&quot;');}
+function setFilterGroup(gid){filterType=filterType==='group'&&filterValue===gid?null:'group';filterValue=filterType?gid:null;updFilterUI();renderSidebar();renderTable();}
+function setFilterTeacher(teacher){filterType=filterType==='teacher'&&filterValue===teacher?null:'teacher';filterValue=filterType?teacher:null;updFilterUI();renderSidebar();renderTable();}
+function groupMatchesFilter(g){
+  if(!filterType||!filterValue)return true;
+  if(filterType==='group')return g?.id===filterValue;
+  if(filterType==='teacher')return g?.teacher===filterValue;
+  return true;
+}
+function getFilterLabel(){
+  if(filterType==='group'){const g=gMap().get(filterValue);return g?`Grupo: ${g.name}`:'Filtro';}
+  if(filterType==='teacher')return `Profe: ${filterValue}`;
+  return 'Filtrar';
+}
+function ensureFilterState(){
+  if(filterType==='group'&&!gMap().has(filterValue)){filterType=null;filterValue=null;return;}
+  if(filterType==='teacher'&&!groups.some(g=>g.teacher===filterValue)){filterType=null;filterValue=null;}
+}
 
 let _tt;
 function toast(msg,type='ok'){document.querySelectorAll('.toast').forEach(t=>t.remove());const t=document.createElement('div');t.className='toast'+(type==='warn'?' warn':'');t.textContent=msg;document.body.appendChild(t);clearTimeout(_tt);_tt=setTimeout(()=>t.remove(),3000);}
@@ -865,7 +1240,8 @@ document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{
 // ══════════════════════════════════════════════
 function renderClubName(){
   const lbl=document.getElementById('club-name-lbl');
-  lbl.textContent=clubName||'· · ·';
+  lbl.textContent=clubName||'Club sin nombre';
+  lbl.classList.toggle('is-empty',!clubName);
 }
 function saveClub(){
   clubName=document.getElementById('club-inp').value.trim();
@@ -881,7 +1257,7 @@ function dayHours(day){
   if(_dayHoursCache[day.id])return _dayHoursCache[day.id];
   const[sh,sm]=day.start.split(':').map(Number),[eh,em]=day.end.split(':').map(Number);
   const s=sh*60+sm,e=eh*60+em,out=[];
-  for(let m=s;m<e;m+=10) out.push(`${String(Math.floor(m/60)).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`);
+  for(let m=s;m<e;m+=GRID_STEP_MIN) out.push(`${String(Math.floor(m/60)).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`);
   _dayHoursCache[day.id]=out;
   return out;
 }
@@ -891,7 +1267,7 @@ function allHours(){
   _allHoursCache=[...set].sort();
   return _allHoursCache;
 }
-function refreshAll(){renderSidebar();renderTable();updConflictUI();if(document.getElementById('view-stats').classList.contains('on'))renderStats();}
+function refreshAll(){renderSidebar();renderTable();renderScheduleSummary();updFilterUI();updConflictUI();if(document.getElementById('view-stats').classList.contains('on'))renderStats();}
 
 // ══════════════════════════════════════════════
 // HOUR MAP (cached, uses O(1) Maps)
@@ -928,70 +1304,160 @@ function buildHourMap(){
 // ══════════════════════════════════════════════
 function getConflicts(){
   const out=[],seen=new Set();
-  const add=m=>{if(!seen.has(m)){seen.add(m);out.push(m);}};
   const hm=buildHourMap();
-  const am=aMap();
+  const gm=gMap(),am=aMap(),dm=dMap();
+  const add=conf=>{
+    if(!conf?.id||seen.has(conf.id)||!conf.targets?.length)return;
+    conf.targets=[...new Set(conf.targets)];
+    conf.approval=getConflictApproval(conf.id);
+    conf.ignored=!!conf.approval;
+    conf.approved=!!conf.approval;
+    seen.add(conf.id);
+    out.push(conf);
+  };
 
-  // Build hour-centric view keyed by "dayId|hour" so same clock-time on different days never collides
   const byDayHour={};
   for(const aid in hm){
     const ap=am.get(aid);if(!ap)continue;
-    const dayId=ap.dayId;
     for(const h in hm[aid]){
-      const k=`${dayId}|${h}`;
+      const k=`${ap.dayId}|${h}`;
       if(!byDayHour[k])byDayHour[k]={};
       byDayHour[k][aid]=hm[aid][h];
     }
   }
 
   for(const dhKey in byDayHour){
-    const h=dhKey.split('|')[1];
+    const [dayId,h]=dhKey.split('|');
+    const day=dm.get(dayId);
     const gidToAps={};
     const teacherGroups={};
+    const teacherTargets={};
     for(const aid in byDayHour[dhKey]){
+      const ap=am.get(aid);
       const gids=byDayHour[dhKey][aid];
       const uniq=[...new Set(gids)];
-      // same gid twice in SAME aparato at same hour = overlap bug
-      if(gids.length>uniq.length){
-        const a=am.get(aid);
-        add(`Grupo duplicado en "${a?.name||aid}" a las ${h}`);
+      const counts={};
+      gids.forEach(gid=>{counts[gid]=(counts[gid]||0)+1;});
+      Object.entries(counts).forEach(([gid,count])=>{
+        if(count<2)return;
+        const g=gm.get(gid);
+        add({
+          id:`dup|${dayId}|${h}|${aid}|${gid}`,
+          type:'duplicate',
+          message:`"${g?.name||gid}" quedó duplicado en ${day?.name||'el día'} · ${ap?.name||aid} a las ${h}`,
+          targets:[`${h}|${aid}`]
+        });
+      });
+      if(ap?.cap>0&&uniq.length>ap.cap){
+        add({
+          id:`cap|${dayId}|${h}|${aid}|${uniq.slice().sort().join(',')}`,
+          type:'capacity',
+          message:`Capacidad excedida en ${day?.name||'el día'} · ${ap.name} a las ${h} (${uniq.length}/${ap.cap})`,
+          targets:[`${h}|${aid}`]
+        });
       }
-      // capacity check
-      const ap=am.get(aid);
-      if(ap?.cap>0&&uniq.length>ap.cap)
-        add(`Capacidad excedida en "${ap.name}" a las ${h} (${uniq.length}/${ap.cap})`);
       uniq.forEach(gid=>{
         if(!gidToAps[gid])gidToAps[gid]=[];
         gidToAps[gid].push(aid);
-        const g=gMap().get(gid);
+        const g=gm.get(gid);
         if(g?.teacher){
           if(!teacherGroups[g.teacher])teacherGroups[g.teacher]=new Set();
+          if(!teacherTargets[g.teacher])teacherTargets[g.teacher]=[];
           teacherGroups[g.teacher].add(gid);
+          teacherTargets[g.teacher].push(`${h}|${aid}`);
         }
       });
     }
-    // Group in 2+ aparatos at same hour ON THE SAME DAY = conflict
     for(const gid in gidToAps){
-      if(gidToAps[gid].length>1){
-        const g=gMap().get(gid);
-        const names=gidToAps[gid].map(aid=>am.get(aid)?.name||aid).join(' y ');
-        add(`"${g?.name||gid}" en ${names} al mismo tiempo (${h})`);
-      }
+      const aids=[...new Set(gidToAps[gid])];
+      if(aids.length<2)continue;
+      const g=gm.get(gid);
+      add({
+        id:`group|${dayId}|${h}|${gid}|${aids.slice().sort().join(',')}`,
+        type:'group',
+        message:`"${g?.name||gid}" está en ${aids.map(aid=>am.get(aid)?.name||aid).join(' y ')} al mismo tiempo (${day?.name||'día'} · ${h})`,
+        targets:aids.map(aid=>`${h}|${aid}`)
+      });
     }
-    // Teacher double-booked on same day at same hour
-    for(const t in teacherGroups){
-      if(teacherGroups[t].size>1){
-        const names=[...teacherGroups[t]].map(gid=>gMap().get(gid)?.name||gid).join(', ');
-        add(`Prof. ${t}: clases simultáneas a las ${h} (${names})`);
-      }
+    for(const teacher in teacherGroups){
+      const gids=[...teacherGroups[teacher]];
+      if(gids.length<2)continue;
+      add({
+        id:`teacher|${dayId}|${h}|${slugify(teacher)}|${gids.slice().sort().join(',')}`,
+        type:'teacher',
+        message:`Prof. ${teacher}: clases simultáneas en ${day?.name||'el día'} a las ${h} (${gids.map(gid=>gm.get(gid)?.name||gid).join(', ')})`,
+        targets:[...new Set(teacherTargets[teacher])]
+      });
     }
   }
-  return out;
+
+  return out.sort((a,b)=>{
+    if(a.approved!==b.approved)return Number(a.approved)-Number(b.approved);
+    return a.message.localeCompare(b.message,'es');
+  });
 }
 
 let confOpen=false;
+let confJumpTimer=null;
+let pendingApprovalConflictId=null;
+function findCellByKey(key){
+  return [...document.querySelectorAll('.tc[data-cell-key]')].find(el=>el.dataset.cellKey===key)||null;
+}
+function openConflictApproval(id){
+  if(_isReadOnly){toast('Iniciá sesión para aprobar excepciones','warn');return;}
+  const conf=getConflicts().find(c=>c.id===id);
+  if(!conf)return;
+  pendingApprovalConflictId=id;
+  document.getElementById('approval-conflict').textContent=conf.message;
+  document.getElementById('approval-note').value=conf.approval?.note||'';
+  openModal('modal-approval');
+}
+function submitConflictApproval(){
+  if(!pendingApprovalConflictId)return;
+  const conf=getConflicts().find(c=>c.id===pendingApprovalConflictId);
+  if(!conf)return;
+  if(!snap())return;
+  ignoredConflicts[pendingApprovalConflictId]={
+    status:'approved',
+    note:document.getElementById('approval-note').value.trim(),
+    approvedBy:_fbUser?.email||'manual',
+    approvedAt:new Date().toISOString()
+  };
+  saveAll();renderTable();updConflictUI();
+  if(document.getElementById('view-stats').classList.contains('on'))renderStats();
+  closeModals();
+  pendingApprovalConflictId=null;
+  toast('Excepción aprobada ✓');
+}
+function revokeConflictApproval(id){
+  if(_isReadOnly){toast('Iniciá sesión para editar aprobaciones','warn');return;}
+  if(!ignoredConflicts[id])return;
+  if(!snap())return;
+  delete ignoredConflicts[id];
+  saveAll();renderTable();updConflictUI();
+  if(document.getElementById('view-stats').classList.contains('on'))renderStats();
+  toast('Aprobación eliminada');
+}
+function goToConflict(id){
+  const conf=getConflicts().find(c=>c.id===id);
+  if(!conf)return;
+  confOpen=true;
+  showView('sched',document.getElementById('nb-sched'));
+  document.getElementById('conf-strip')?.classList.add('open');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    const cell=conf.targets.map(findCellByKey).find(Boolean);
+    if(!cell)return;
+    clearTimeout(confJumpTimer);
+    document.querySelectorAll('.tc.jump-target').forEach(el=>el.classList.remove('jump-target'));
+    cell.classList.add('jump-target');
+    confJumpTimer=setTimeout(()=>cell.classList.remove('jump-target'),2200);
+    cell.scrollIntoView({behavior:'smooth',block:'center',inline:'center'});
+  }));
+}
 function updConflictUI(){
   const c=getConflicts();
+  const active=c.filter(conf=>!conf.approved);
+  const approved=c.filter(conf=>conf.approved);
   const pill=document.getElementById('conf-pill');
   const txt=document.getElementById('conf-pill-txt');
   const list=document.getElementById('conf-list');
@@ -999,10 +1465,31 @@ function updConflictUI(){
   const strip=document.getElementById('conf-strip');
   if(!c.length){pill.classList.remove('show');strip.classList.remove('open');confOpen=false;return;}
   pill.classList.add('show');
-  txt.textContent=`⚠ ${c.length} conflicto${c.length!==1?'s':''}`;
-  ttl.textContent=`${c.length} conflicto${c.length!==1?'s':''}`;
-  list.innerHTML=c.map(m=>`<div class="conf-row">${m}</div>`).join('');
+  txt.textContent=active.length
+    ? `⚠ ${active.length} conflicto${active.length!==1?'s':''}${approved.length?` · ${formatApprovedExceptions(approved.length)}`:''}`
+    : `⚠ ${formatApprovedExceptions(approved.length)}`;
+  ttl.textContent=active.length
+    ? `${active.length} conflicto${active.length!==1?'s':''} pendiente${active.length!==1?'s':''}${approved.length?` · ${formatApprovedExceptions(approved.length)}`:''}`
+    : `Todas las excepciones están aprobadas (${approved.length})`;
+  const renderRows=(items,title)=>items.length?`<div class="conf-group">
+    <div class="conf-group-title">${title}</div>
+    ${items.map(conf=>`
+    <div class="conf-row${conf.ignored?' ignored':''}">
+      <div class="conf-row-main" onclick="goToConflict(${jsArg(conf.id)})">
+        <span class="conf-row-status">${conf.approved?'Aprobada':'Pendiente'}</span>${escapeHtml(conf.message)}
+        ${conf.approval?.note||conf.approval?`<div class="conf-row-note">${conf.approval?.note?escapeHtml(conf.approval.note):'Sin observaciones registradas.'}<span class="conf-row-meta">${escapeHtml(formatApprovalMeta(conf.approval))}</span></div>`:''}
+      </div>
+      <div class="conf-row-acts">
+        <button class="conf-btn" onclick="goToConflict(${jsArg(conf.id)})">Ir</button>
+        ${_isReadOnly?'':conf.approved
+          ? `<button class="conf-btn approval-only" onclick="revokeConflictApproval(${jsArg(conf.id)})">Quitar aprobación</button>`
+          : `<button class="conf-btn approval-only" onclick="openConflictApproval(${jsArg(conf.id)})">Aprobar excepción</button>`}
+      </div>
+    </div>`).join('')}
+  </div>`:'';
+  list.innerHTML=renderRows(active,'Pendientes')+renderRows(approved,'Excepciones aprobadas');
   if(confOpen)strip.classList.add('open');
+  renderScheduleSummary();
 }
 function toggleConf(){confOpen=!confOpen;document.getElementById('conf-strip').classList.toggle('open',confOpen);}
 
@@ -1010,11 +1497,12 @@ function toggleConf(){confOpen=!confOpen;document.getElementById('conf-strip').c
 // VIEWS
 // ══════════════════════════════════════════════
 function showView(v,btn){
+  if(v==='groups'&&_isReadOnly){v='sched';btn=document.getElementById('nb-sched');}
   document.querySelectorAll('.view').forEach(el=>el.classList.remove('on'));
   document.querySelectorAll('.nb').forEach(el=>el.classList.remove('on'));
   document.getElementById('view-'+v).classList.add('on');
   if(btn)btn.classList.add('on');
-  if(v==='sched'){renderSidebar();renderTable();}
+  if(v==='sched'){renderSidebar();renderTable();updFilterUI();}
   if(v==='groups'){renderColorPicker();renderGroupList();}
   if(v==='stats'){renderStats();}
 }
@@ -1037,18 +1525,19 @@ function addGroup(){
   const teacher=document.getElementById('g-teacher').value.trim();
   const cat=document.getElementById('g-cat').value.trim();
   if(!name||!teacher){toast('Completá nombre y profesor','warn');return;}
-  snap();
+  if(!snap())return;
   groups.push({id:uid(),name,teacher,cat,color:selColor});
   ['g-name','g-teacher','g-cat'].forEach(i=>document.getElementById(i).value='');
-  saveAll();renderGroupList();renderSidebar();toast(`"${name}" creado ✓`);
+  saveAll();renderGroupList();updFilterUI();renderSidebar();toast(`"${name}" creado ✓`);
 }
 function deleteGroup(id){
   if(!confirm('¿Eliminar grupo y todos sus bloques?'))return;
-  snap();
+  if(!snap())return;
+  const removed=groups.find(g=>g.id===id);
   groups=groups.filter(g=>g.id!==id);
   for(const k in schedule){schedule[k]=schedule[k].filter(e=>e.gid!==id);if(!schedule[k].length)delete schedule[k];}
-  if(filterGid===id)filterGid=null;
-  saveAll();renderGroupList();renderSidebar();renderTable();updConflictUI();
+  if((filterType==='group'&&filterValue===id)||(filterType==='teacher'&&removed?.teacher&&!groups.some(g=>g.teacher===removed.teacher))){filterType=null;filterValue=null;}
+  saveAll();renderGroupList();updFilterUI();renderSidebar();renderTable();updConflictUI();
 }
 function openEditGroup(id){
   const g=gMap().get(id);if(!g)return;
@@ -1064,9 +1553,10 @@ function confirmEditGroup(){
   const teacher=document.getElementById('eg-teacher').value.trim();
   const cat=document.getElementById('eg-cat').value.trim();
   if(!name||!teacher){toast('Completá nombre y profesor','warn');return;}
-  snap();
+  if(!snap())return;
   g.name=name;g.teacher=teacher;g.cat=cat;g.color=editSelColor;
-  saveAll();closeModals();renderGroupList();renderSidebar();renderTable();updConflictUI();toast('Grupo actualizado ✓');
+  ensureFilterState();
+  saveAll();closeModals();renderGroupList();updFilterUI();renderSidebar();renderTable();updConflictUI();toast('Grupo actualizado ✓');
 }
 
 // group row-drag reorder
@@ -1074,7 +1564,7 @@ let rowDI=null;
 function onRowDS(e,i){rowDI=i;e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain','row');e.stopPropagation();setTimeout(()=>document.querySelectorAll('.gitem')[i]?.classList.add('dragging'),0);}
 function onRowDO(e,i){e.preventDefault();e.stopPropagation();if(rowDI===null||rowDI===i)return;document.querySelectorAll('.gitem').forEach(el=>el.classList.remove('drag-tgt'));document.querySelectorAll('.gitem')[i]?.classList.add('drag-tgt');}
 function onRowDL(e){e.currentTarget.classList.remove('drag-tgt');}
-function onRowDrop(e,i){e.preventDefault();e.stopPropagation();if(rowDI===null||rowDI===i){rowDI=null;return;}snap();const m=groups.splice(rowDI,1)[0];groups.splice(i,0,m);rowDI=null;saveAll();renderGroupList();renderSidebar();}
+function onRowDrop(e,i){e.preventDefault();e.stopPropagation();if(rowDI===null||rowDI===i){rowDI=null;return;}if(!snap())return;const m=groups.splice(rowDI,1)[0];groups.splice(i,0,m);rowDI=null;saveAll();renderGroupList();renderSidebar();}
 function onRowDE(){rowDI=null;document.querySelectorAll('.gitem').forEach(el=>el.classList.remove('dragging','drag-tgt'));}
 
 function renderGroupList(){
@@ -1104,13 +1594,45 @@ function renderGroupList(){
 // SIDEBAR
 // ══════════════════════════════════════════════
 function renderSidebar(){
+  ensureFilterState();
   const el=document.getElementById('sb-pills');if(!el)return;
+  const ttl=document.getElementById('sb-title');
+  const sub=document.getElementById('sb-sub');
+  const meta=document.getElementById('sb-meta');
+  const teacherCount=[...new Set(groups.map(g=>g.teacher).filter(Boolean))].length;
+  const filterChip=filterType&&filterValue?`<div class="sb-filter-chip"><span>${escapeHtml(getFilterLabel())}</span><button onclick="clearFilter(false);renderSidebar()">Limpiar</button></div>`:'';
+  if(_isReadOnly){
+    if(ttl)ttl.textContent='Panel de consulta';
+    if(sub)sub.textContent='Compartí horarios, filtrá por profe o grupo y exportá en un formato prolijo.';
+    if(meta)meta.innerHTML=`
+      <div class="sb-stat"><strong>${groups.length}</strong><span>grupos cargados</span></div>
+      <div class="sb-stat"><strong>${teacherCount}</strong><span>profesores activos</span></div>
+      <div class="sb-stat"><strong>${days.length}</strong><span>días visibles</span></div>
+      <div class="sb-stat"><strong>${getConflicts().filter(conf=>!conf.approved).length}</strong><span>conflictos activos</span></div>`;
+    el.innerHTML=`
+      ${filterChip}
+      <div class="sb-actions">
+        <button class="sb-side-btn" onclick="openModal('modal-gview')">Vista grupo</button>
+        <button class="sb-side-btn" onclick="openModal('modal-tview')">Vista profe</button>
+        <button class="sb-side-btn" onclick="openExportDays('pdf')">Exportar PDF</button>
+        <button class="sb-side-btn" onclick="openExportDays('png')">Exportar PNG</button>
+      </div>
+      <div class="sb-note">Este panel está optimizado para consulta. Si necesitás mover bloques, crear días o editar grupos, iniciá sesión y pasá a modo edición.</div>`;
+    return;
+  }
+  if(ttl)ttl.textContent='Biblioteca de grupos';
+  if(sub)sub.textContent='Arrastrá al horario, filtrá por grupo o prepará vistas para compartir.';
+  if(meta)meta.innerHTML=`
+    <div class="sb-stat"><strong>${groups.length}</strong><span>grupos</span></div>
+    <div class="sb-stat"><strong>${teacherCount}</strong><span>profesores</span></div>
+    <div class="sb-stat"><strong>${days.length}</strong><span>días</span></div>
+    <div class="sb-stat"><strong>${getConflicts().filter(conf=>!conf.approved).length}</strong><span>conflictos activos</span></div>`;
   if(!groups.length){el.innerHTML='<div class="sb-empty"><span class="ico">🤸</span>Sin grupos.<br>Creá uno en Grupos.</div>';return;}
-  el.innerHTML=groups.map(g=>`
-    <div class="pill${filterGid&&filterGid!==g.id?' dimmed-pill':''}"
+  el.innerHTML=filterChip+groups.map(g=>`
+    <div class="pill${groupMatchesFilter(g)?'':' dimmed-pill'}"
       style="background:${rgba(g.color,.12)};color:${g.color}"
       draggable="true" ondragstart="onSchedDS(event,'${g.id}')"
-      onclick="setFilter('${g.id}')" title="Click para filtrar">
+      onclick="setFilterGroup('${g.id}')" title="Click para filtrar">
       <span class="pill-dot" style="background:${g.color}"></span>
       <div class="pill-info">
         <span class="pill-name">${g.name}</span>
@@ -1122,35 +1644,72 @@ function renderSidebar(){
 // ══════════════════════════════════════════════
 // FILTER
 // ══════════════════════════════════════════════
-function setFilter(gid){
-  filterGid = (filterGid===gid) ? null : gid;
+function clearFilter(close=true){
+  filterType=null;filterValue=null;
   updFilterUI();renderSidebar();renderTable();
+  if(close)closeModals();
 }
-function clearFilter(){filterGid=null;updFilterUI();renderSidebar();renderTable();closeModals();}
 function updFilterUI(){
   const btn=document.getElementById('filter-btn');
-  if(filterGid){
-    const g=gMap().get(filterGid);
-    btn.textContent=`🔍 ${g?.name||'Filtro'}`;
+  if(!btn)return;
+  ensureFilterState();
+  if(filterType&&filterValue){
+    btn.textContent=getFilterLabel();
     btn.classList.add('active-filter');
   } else {
-    btn.textContent='🔍 Filtrar';
+    btn.textContent='Filtrar';
     btn.classList.remove('active-filter');
   }
 }
 function openFilterMenu(){
   const list=document.getElementById('filter-list');
+  ensureFilterState();
   if(!groups.length){toast('Sin grupos','warn');return;}
-  list.innerHTML=groups.map(g=>`
-    <div onclick="setFilter('${g.id}');closeModals()"
+  const teacherCounts={};
+  groups.forEach(g=>{if(g.teacher)teacherCounts[g.teacher]=(teacherCounts[g.teacher]||0)+1;});
+  const teachers=Object.keys(teacherCounts).sort((a,b)=>a.localeCompare(b,'es'));
+  const renderItem=(cfg)=>`
+    <div onclick="${cfg.onClick}"
       style="display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:var(--r);
-      background:${filterGid===g.id?rgba(g.color,.15):'var(--bg)'};
-      border:1px solid ${filterGid===g.id?g.color:'var(--bd)'};cursor:pointer;transition:all .12s"
-      onmouseover="this.style.borderColor='${g.color}'" onmouseout="this.style.borderColor='${filterGid===g.id?g.color:'var(--bd)'}'">
-      <div style="width:8px;height:8px;border-radius:50%;background:${g.color};flex-shrink:0"></div>
-      <span style="font-size:.74rem;font-weight:600;color:${filterGid===g.id?g.color:'var(--tx)'}">${g.name}</span>
-      <span style="font-family:var(--mono);font-size:.6rem;color:var(--tx3);margin-left:auto">${g.teacher}</span>
-    </div>`).join('');
+      background:${cfg.bg};border:1px solid ${cfg.border};cursor:pointer;transition:all .12s"
+      onmouseover="this.style.borderColor='${cfg.hover}'" onmouseout="this.style.borderColor='${cfg.border}'">
+      <div style="width:8px;height:8px;border-radius:50%;background:${cfg.dot};flex-shrink:0"></div>
+      <span style="font-size:.74rem;font-weight:600;color:${cfg.text}">${cfg.label}</span>
+      <span style="font-family:var(--mono);font-size:.6rem;color:var(--tx3);margin-left:auto">${cfg.meta}</span>
+    </div>`;
+  const teacherItems=teachers.length?`
+    <div style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.9px;color:var(--tx3);padding:6px 2px 2px">Profes</div>
+    ${teachers.map(t=>{
+      const active=filterType==='teacher'&&filterValue===t;
+      return renderItem({
+        onClick:`setFilterTeacher(${jsArg(t)});closeModals()`,
+        bg:active?'rgba(91,163,255,.14)':'var(--bg)',
+        border:active?'#5ba3ff':'var(--bd)',
+        hover:'#5ba3ff',
+        dot:'#5ba3ff',
+        text:active?'#5ba3ff':'var(--tx)',
+        label:escapeHtml(t),
+        meta:`${teacherCounts[t]} grupo${teacherCounts[t]!==1?'s':''}`
+      });
+    }).join('')}
+  `:'';
+  const groupItems=`
+    <div style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.9px;color:var(--tx3);padding:6px 2px 2px">Grupos</div>
+    ${groups.map(g=>{
+      const active=filterType==='group'&&filterValue===g.id;
+      return renderItem({
+        onClick:`setFilterGroup('${g.id}');closeModals()`,
+        bg:active?rgba(g.color,.15):'var(--bg)',
+        border:active?g.color:'var(--bd)',
+        hover:g.color,
+        dot:g.color,
+        text:active?g.color:'var(--tx)',
+        label:escapeHtml(g.name),
+        meta:escapeHtml(g.teacher)
+      });
+    }).join('')}
+  `;
+  list.innerHTML=teacherItems+groupItems;
   openModal('modal-filter');
 }
 
@@ -1193,7 +1752,7 @@ function onCellDrop(e,key){
     if((hm[aid]?.[h]||[]).includes(gid)){toast('El bloque se superpone con uno existente','warn');dragGid=null;return;}
   }
 
-  snap();
+  if(!snap())return;
   if(!schedule[key])schedule[key]=[];
   schedule[key].push({gid,dur:durMins,note:''});
   saveAll();renderTable();updConflictUI();dragGid=null;
@@ -1235,7 +1794,7 @@ function _doMoveBlock(srcKey,gid,dstKey){
     if(si+i>=dh.length)break;
     if((hm[dstAid]?.[dh[si+i]]||[]).includes(gid)){toast('Se superpone con otro bloque','warn');movingBlk=null;return;}
   }
-  snap();
+  if(!snap())return;
   // remove from src
   schedule[srcKey]=schedule[srcKey].filter(en=>en.gid!==gid);
   if(!schedule[srcKey].length)delete schedule[srcKey];
@@ -1246,7 +1805,7 @@ function _doMoveBlock(srcKey,gid,dstKey){
   movingBlk=null;
 }
 
-function removeBlock(key,gid){snap();if(!schedule[key])return;schedule[key]=schedule[key].filter(e=>e.gid!==gid);if(!schedule[key].length)delete schedule[key];saveAll();renderTable();updConflictUI();}
+function removeBlock(key,gid){if(!snap())return;if(!schedule[key])return;schedule[key]=schedule[key].filter(e=>e.gid!==gid);if(!schedule[key].length)delete schedule[key];saveAll();renderTable();updConflictUI();}
 
 // Edit block
 let editBlkKey=null,editBlkGid=null;
@@ -1261,13 +1820,13 @@ function openEditBlock(key,gid){
 }
 function confirmEditBlock(){
   const entry=(schedule[editBlkKey]||[]).find(e=>e.gid===editBlkGid);if(!entry)return;
-  const newDur=Math.max(10,Math.round((parseInt(document.getElementById('eblk-dur').value)||30)/10)*10);
+  const newDur=normalizeDuration(document.getElementById('eblk-dur').value);
   const newNote=document.getElementById('eblk-note').value.trim();
   const[startH,aid]=editBlkKey.split('|');
   const ap=aMap().get(aid);
   const day=ap?dMap().get(ap.dayId):null;
   if(day){const dh=dayHours(day);const si=dh.indexOf(startH);if(si>=0&&si+toSlots(newDur)>dh.length){toast(`Duración excede el horario (${day.end})`,'warn');return;}}
-  snap();entry.dur=newDur;entry.note=newNote;
+  if(!snap())return;entry.dur=newDur;entry.note=newNote;
   saveAll();closeModals();renderTable();updConflictUI();toast('Bloque actualizado ✓');
 }
 
@@ -1279,7 +1838,20 @@ function openModal(id){
   if(id==='modal-copy'){const opts=days.map(d=>`<option value="${d.id}">${d.name}</option>`).join('');document.getElementById('cp-src').innerHTML=opts;document.getElementById('cp-dst').innerHTML=opts;}
   if(id==='modal-tpl')renderTplList();
   if(id==='modal-gview'){if(!groups.length){toast('Sin grupos','warn');return;}document.getElementById('gv-sel').innerHTML=groups.map(g=>`<option value="${g.id}">${g.name} — ${g.teacher}</option>`).join('');}
+  if(id==='modal-tview'){
+    const teachers=[...new Set(groups.map(g=>g.teacher).filter(Boolean))].sort();
+    if(!teachers.length){toast('Sin profesores asignados','warn');return;}
+    document.getElementById('tv-sel').innerHTML=teachers.map(t=>`<option value="${t}">${t}</option>`).join('');
+  }
   if(id==='modal-day'){document.getElementById('day-nm').value='';document.getElementById('day-st').value='15:00';document.getElementById('day-en').value='21:00';}
+  if(id==='modal-pdf-cfg'){
+    document.getElementById('pdf-day-list').innerHTML=days.map(d=>`
+      <label style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;background:var(--bg);border:1px solid var(--bd);cursor:pointer;font-size:.74rem;font-weight:600">
+        <input type="checkbox" data-did="${d.id}" checked style="width:auto;margin:0;accent-color:var(--acc)">
+        ${d.name}
+        <span style="font-family:var(--mono);font-size:.6rem;color:var(--tx3);margin-left:auto">${d.start}–${d.end}</span>
+      </label>`).join('');
+  }
   if(id==='modal-club'){document.getElementById('club-inp').value=clubName||'';}
   document.getElementById(id).classList.add('open');
   setTimeout(()=>{const inp=document.querySelector(`#${id} input[type=text],#${id} input[type=number]`);if(inp)inp.focus();},80);
@@ -1291,7 +1863,7 @@ function confirmAddDay(){
   const end=document.getElementById('day-en').value||'21:00';
   if(!name){toast('Escribí un nombre','warn');return;}
   if(start>=end){toast('El fin debe ser mayor al inicio','warn');return;}
-  snap();days.push({id:uid(),name,start,end});
+  if(!snap())return;days.push({id:uid(),name,start,end});
   saveAll();closeModals();renderTable();toast(`"${name}" agregado ✓`);
 }
 let editDayId=null;
@@ -1311,12 +1883,12 @@ function confirmEditDay(){
   const end=document.getElementById('ed-en').value;
   if(!name){toast('Escribí un nombre','warn');return;}
   if(start>=end){toast('El fin debe ser mayor al inicio','warn');return;}
-  snap();d.name=name;d.start=start;d.end=end;
+  if(!snap())return;d.name=name;d.start=start;d.end=end;
   saveAll();closeModals();renderTable();toast('Día actualizado ✓');
 }
 function deleteDay(id){
   if(!confirm('¿Eliminar este día y todos sus bloques?'))return;
-  snap();
+  if(!snap())return;
   aparatos.filter(a=>a.dayId===id).forEach(a=>{for(const k in schedule){if(k.split('|')[1]===a.id)delete schedule[k];}});
   aparatos=aparatos.filter(a=>a.dayId!==id);
   days=days.filter(d=>d.id!==id);
@@ -1331,7 +1903,7 @@ function confirmAddAp(){
   const dayId=document.getElementById('ap-day').value;
   const cap=parseInt(document.getElementById('ap-cap').value)||0;
   if(!name||!dayId){toast('Completá el formulario','warn');return;}
-  snap();aparatos.push({id:uid(),dayId,name,cap});
+  if(!snap())return;aparatos.push({id:uid(),dayId,name,cap});
   saveAll();closeModals();renderTable();toast(`"${name}" agregado ✓`);
 }
 let editApId=null;
@@ -1348,18 +1920,18 @@ function confirmEditAp(){
   const name=document.getElementById('eap-nm').value.trim();
   const cap=parseInt(document.getElementById('eap-cap').value)||0;
   if(!name){toast('Poné un nombre','warn');return;}
-  snap();a.name=name;a.cap=cap;
+  if(!snap())return;a.name=name;a.cap=cap;
   saveAll();closeModals();renderTable();updConflictUI();toast('Aparato actualizado ✓');
 }
 function deleteAp(id){
   if(!confirm('¿Eliminar aparato y sus bloques?'))return;
-  snap();for(const k in schedule){if(k.split('|')[1]===id)delete schedule[k];}
+  if(!snap())return;for(const k in schedule){if(k.split('|')[1]===id)delete schedule[k];}
   aparatos=aparatos.filter(a=>a.id!==id);
   saveAll();renderTable();updConflictUI();
 }
 function clearAll(){
   if(!confirm('¿Limpiar todos los bloques? Podés deshacer con Ctrl+Z.'))return;
-  snap();schedule={};saveAll();renderTable();updConflictUI();toast('Horarios limpiados');
+  if(!snap())return;schedule={};saveAll();renderTable();updConflictUI();toast('Horarios limpiados');
 }
 
 // ══════════════════════════════════════════════
@@ -1370,7 +1942,7 @@ function confirmCopyDay(){
   const dstId=document.getElementById('cp-dst').value;
   const ow=document.getElementById('cp-ow').checked;
   if(srcId===dstId){toast('Origen y destino iguales','warn');return;}
-  snap();
+  if(!snap())return;
   const srcAps=aparatos.filter(a=>a.dayId===srcId);
   const dstAps=aparatos.filter(a=>a.dayId===dstId);
   const srcDay=dMap().get(srcId);if(!srcDay)return;
@@ -1394,16 +1966,17 @@ function saveTpl(){
   const name=document.getElementById('tpl-nm').value.trim();
   if(!name){toast('Poné un nombre','warn');return;}
   templates.push({id:uid(),name,date:new Date().toLocaleDateString('es-AR'),
-    data:{groups:JSON.parse(JSON.stringify(groups)),days:JSON.parse(JSON.stringify(days)),aparatos:JSON.parse(JSON.stringify(aparatos)),schedule:JSON.parse(JSON.stringify(schedule))}});
+    data:{groups:JSON.parse(JSON.stringify(groups)),days:JSON.parse(JSON.stringify(days)),aparatos:JSON.parse(JSON.stringify(aparatos)),schedule:JSON.parse(JSON.stringify(schedule)),ignoredConflicts:JSON.parse(JSON.stringify(ignoredConflicts))}});
   saveAll();renderTplList();toast(`"${name}" guardada ✓`);
   document.getElementById('tpl-nm').value='';
 }
 function loadTpl(id){
   if(!confirm('¿Cargar? El horario actual se reemplazará.'))return;
   const t=templates.find(x=>x.id===id);if(!t)return;
-  snap();const d=t.data||t;
+  if(!snap())return;const d=t.data||t;
   groups=JSON.parse(JSON.stringify(d.groups||[]));days=JSON.parse(JSON.stringify(d.days||[]));
   aparatos=JSON.parse(JSON.stringify(d.aparatos||[]));schedule=JSON.parse(JSON.stringify(d.schedule||{}));
+  ignoredConflicts=normalizeConflictApprovals(JSON.parse(JSON.stringify(d.ignoredConflicts||{})));
   saveAll();closeModals();refreshAll();toast(`"${t.name}" cargada ✓`);
 }
 function deleteTpl(id){templates=templates.filter(t=>t.id!==id);saveAll();renderTplList();}
@@ -1433,8 +2006,9 @@ function importJSON(e){
       const d=JSON.parse(ev.target.result);
       if(!d.groups||!d.days||!d.aparatos||!d.schedule){toast('JSON inválido: faltan campos','warn');return;}
       if(!confirm('¿Importar este backup? El horario actual se reemplazará.'))return;
-      snap();
+      if(!snap())return;
       groups=d.groups;days=d.days;aparatos=d.aparatos;
+      ignoredConflicts=normalizeConflictApprovals(d.ignoredConflicts||{});
       // Purge orphan schedule keys whose aparato no longer exists
       const validAids=new Set(d.aparatos.map(a=>a.id));
       const clean={};
@@ -1466,6 +2040,7 @@ function setZoom(v){
     tbl.style.transformOrigin='top left';
     // Shrink wrapper to match scaled table so scrollbar range is accurate
     if(wrap){
+      wrap.classList.toggle('zoomed',scale<1);
       if(scale<1){
         wrap.style.width=tbl.offsetWidth*scale+'px';
         wrap.style.height=tbl.offsetHeight*scale+'px';
@@ -1474,14 +2049,16 @@ function setZoom(v){
       }
     }
   }
-  document.getElementById('zoom-val').textContent=currentZoom+'%';
-  document.getElementById('zoom-sl').value=currentZoom;
+  const zoomVal=document.getElementById('zoom-val');
+  const zoomSl=document.getElementById('zoom-sl');
+  if(zoomVal)zoomVal.textContent=currentZoom+'%';
+  if(zoomSl)zoomSl.value=currentZoom;
 }
 
 // ══════════════════════════════════════════════
 // RENDER TABLE
 // ══════════════════════════════════════════════
-const SLOT_H=42;
+const SLOT_H=Math.max(22,Math.round(GRID_STEP_MIN*4.4));
 
 function renderTable(){
   const container=document.getElementById('tbl-container');
@@ -1519,8 +2096,11 @@ function renderTable(){
     const cols=aparatos.filter(a=>a.dayId===d.id).length||1;
     const dc=DAY_COLORS[di%DAY_COLORS.length];
     const last=di===days.length-1;
+    const dayBg=isDark
+      ? `linear-gradient(180deg, ${rgba(dc,.14)} 0%, ${rgba(dc,.05)} 100%)`
+      : `linear-gradient(180deg, ${rgba(dc,.24)} 0%, ${rgba(dc,.08)} 100%)`;
     r1+=`<th class="th-day${dayDragOver===d.id?' day-drag-over':''}" data-did="${d.id}" colspan="${cols}"
-      style="color:${dc};border-bottom-color:${dc};${last?'border-right:none':''}"
+      style="color:${isDark?dc:'var(--tx)'};border-bottom-color:${dc};background:${dayBg};box-shadow:inset 0 1px 0 ${rgba(dc,isDark?.18:.28)};${last?'border-right:none':''}"
       draggable="true"
       ondragstart="onDayColDS(event,'${d.id}')"
       ondragover="onDayColDO(event,'${d.id}')"
@@ -1541,10 +2121,10 @@ function renderTable(){
   aparatos.forEach(a=>{
     const day=dMap().get(a.dayId);if(!day)return;
     const dh=dayHours(day);
-    const totalMins=dh.length*10;
+    const totalMins=dh.length*GRID_STEP_MIN;
     let usedMins=0;
     const hm=buildHourMap();
-    if(hm[a.id]){Object.values(hm[a.id]).forEach(gids=>{if([...new Set(gids)].length>0)usedMins+=10;});}
+    if(hm[a.id]){Object.values(hm[a.id]).forEach(gids=>{if([...new Set(gids)].length>0)usedMins+=GRID_STEP_MIN;});}
     freeMap[a.id]=Math.max(0,totalMins-usedMins);
   });
   days.forEach((d,di)=>{
@@ -1593,33 +2173,8 @@ function renderTable(){
     });
   }
 
-  // ── conflict cells ──
-  const conflCells=new Set();
   const hm=buildHourMap();
-  const _am=aMap();
-  for(const aid in hm){
-    const ap=_am.get(aid);
-    for(const h in hm[aid]){
-      const gids=hm[aid][h];const uniq=[...new Set(gids)];
-      if(gids.length>uniq.length)conflCells.add(`${h}|${aid}`);
-      if(ap?.cap>0&&uniq.length>ap.cap)conflCells.add(`${h}|${aid}`);
-    }
-  }
-  // Cross-aparato conflict: only flag when same group in 2+ aparatos on THE SAME DAY at same hour
-  const byDayHour={};
-  for(const aid in hm){
-    const ap=_am.get(aid);if(!ap)continue;
-    for(const h in hm[aid]){
-      const k=`${ap.dayId}|${h}`;
-      if(!byDayHour[k])byDayHour[k]={};
-      byDayHour[k][aid]=hm[aid][h];
-    }
-  }
-  for(const dhk in byDayHour){
-    const g2a={};
-    for(const aid in byDayHour[dhk])[...new Set(byDayHour[dhk][aid])].forEach(gid=>{if(!g2a[gid])g2a[gid]=[];g2a[gid].push(aid);});
-    for(const gid in g2a)if(g2a[gid].length>1)g2a[gid].forEach(aid=>conflCells.add(`${dhk.split('|')[1]}|${aid}`));
-  }
+  const conflCells=new Set(getConflicts().filter(conf=>!conf.approved).flatMap(conf=>conf.targets));
 
   // ── body rows ──
   const ah=allHours();
@@ -1651,15 +2206,19 @@ function renderTable(){
             const blockH=toSlots(o.dur)*SLOT_H-4;
             const isTiny=blockH<32;
             const isConfl=conflCells.has(key);
-            const isDimmed=filterGid&&filterGid!==g.id;
-            // stack offset for multiple blocks in same cell
+            const isDimmed=!groupMatchesFilter(g);
             const offsetX=oi*3,offsetY=oi*3;
+            // Notion-style solid bg, text color auto from luminance
+            const _cr=parseInt(g.color.slice(1,3),16),_cg=parseInt(g.color.slice(3,5),16),_cb=parseInt(g.color.slice(5,7),16);
+            const _lum=(_cr*299+_cg*587+_cb*114)/1000;
+            const txtCol=_lum>145?'rgba(0,0,0,.85)':'rgba(255,255,255,.95)';
+            const frameCol=_lum>145?'rgba(255,255,255,.45)':'rgba(0,0,0,.18)';
             blkHtml+=`
               <div class="blk${isConfl?' conflict':''}${isDimmed?' dimmed-blk':''}${isTiny?' blk-tiny':''}"
                 draggable="true"
                 ondragstart="onBlkDragStart(event,'${o.startKey}','${o.gid}')"
                 ondragend="onBlkDragEnd(event)"
-                style="height:${blockH}px;background:${rgba(g.color,.15)};color:${g.color};border-left-color:${g.color};${oi>0?`top:${1+offsetY}px;left:${1+offsetX}px;right:${1-offsetX}px;`:''}"
+                style="height:${blockH}px;background:${g.color};color:${txtCol};border:1px solid ${frameCol};${oi>0?`top:${1+offsetY}px;left:${1+offsetX}px;right:${1-offsetX}px;`:''}"
                 title="${g.name} · ${g.teacher} · ${o.dur}min${o.note?' · '+o.note:''}">
                 <div class="blk-name">${g.name}</div>
                 <div class="blk-teacher">${g.teacher}</div>
@@ -1674,6 +2233,7 @@ function renderTable(){
           });
 
           row+=`<td class="tc${onHr?' on-hr-row':''}${isSep?' day-sep':''}${capFull?' cap-full':''}"
+            data-cell-key="${key}"
             style="${isNonStart?'pointer-events:none;':''}position:relative"
             ${!isNonStart?`ondragover="onCellDO(event)" ondragleave="onCellDL(event)" ondrop="onCellDrop(event,'${key}')" onclick="onCellClick(event,'${key}')" onmouseenter="this.classList.add('cell-hover')" onmouseleave="this.classList.remove('cell-hover')"`:''} 
           >${blkHtml}</td>`;
@@ -1694,6 +2254,7 @@ function renderTable(){
     wrap.addEventListener('mousemove',onTableMouseMove);
     wrap.addEventListener('mouseleave',()=>{ruler.style.display='none';});
   }
+  renderScheduleSummary();
 }
 
 // ══════════════════════════════════════════════
@@ -1701,6 +2262,7 @@ function renderTable(){
 // ══════════════════════════════════════════════
 function computeStats(){
   const gm={},tm={},am={};
+  let totalMins=0,totalBlocks=0;
   groups.forEach(g=>{gm[g.id]=0;});
   for(const key in schedule){
     const aid=key.split('|')[1];
@@ -1708,16 +2270,41 @@ function computeStats(){
     (schedule[key]||[]).forEach(e=>{
       const g=gMap().get(e.gid);if(!g)return;
       const m=e.dur||30;
+      totalMins+=m;
+      totalBlocks++;
       gm[g.id]=(gm[g.id]||0)+m;
       const t=g.teacher||'Sin profesor';tm[t]=(tm[t]||0)+m;
       if(ap)am[ap.name]=(am[ap.name]||0)+m;
     });
   }
-  return{gm,tm,am};
+  return{gm,tm,am,totalMins,totalBlocks};
+}
+function renderScheduleSummary(){
+  const {gm,tm,totalMins,totalBlocks}=computeStats();
+  const conflicts=getConflicts();
+  const activeConflicts=conflicts.filter(conf=>!conf.approved);
+  const approvedCount=conflicts.length-activeConflicts.length;
+  const teachers=Object.keys(tm).length;
+  const set=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
+  set('sum-days',days.length);
+  set('sum-groups',groups.length);
+  set('sum-teachers',teachers);
+  set('sum-hours',fmtT(totalMins));
+  set('sum-hours-sub',`${totalBlocks} bloque${totalBlocks!==1?'s':''}`);
+  set('sum-conflicts',activeConflicts.length);
+  set('sum-conflicts-sub',activeConflicts.length?formatApprovedExceptions(approvedCount):'sin pendientes');
 }
 function renderStats(){
-  const{gm,tm,am}=computeStats();
+  const{gm,tm,am,totalMins,totalBlocks}=computeStats();
   const c=getConflicts();
+  const activeConflicts=c.filter(conf=>!conf.approved);
+  const approvedCount=c.length-activeConflicts.length;
+  document.getElementById('st-sum-hours').textContent=fmtT(totalMins);
+  document.getElementById('st-sum-hours-sub').textContent=`${totalBlocks} bloque${totalBlocks!==1?'s':''}`;
+  document.getElementById('st-sum-teachers').textContent=Object.keys(tm).length;
+  document.getElementById('st-sum-groups').textContent=groups.filter(g=>(gm[g.id]||0)>0).length;
+  document.getElementById('st-sum-conflicts').textContent=activeConflicts.length;
+  document.getElementById('st-sum-conflicts-sub').textContent=activeConflicts.length?formatApprovedExceptions(approvedCount):'sin pendientes';
   const maxG=Math.max(1,...Object.values(gm));
   document.getElementById('st-g').innerHTML=groups.length?`<table class="stbl">
     <tr><th>Grupo</th><th>Tiempo</th><th style="width:55px">—</th></tr>
@@ -1733,7 +2320,24 @@ function renderStats(){
     <tr><th>Aparato</th><th>Tiempo</th><th style="width:55px">Uso</th></tr>
     ${Object.entries(am).sort((a,b)=>b[1]-a[1]).map(([n,m])=>{const p=Math.round((m/maxA)*100);return `<tr><td>${n}</td><td class="val">${fmtT(m)}</td><td><div class="bw"><div class="br" style="width:${p}%;background:var(--teal)"></div></div></td></tr>`;}).join('')}
     </table>`:`<div class="no-data">Sin datos</div>`;
-  document.getElementById('st-c').innerHTML=c.length?`<div style="display:flex;flex-direction:column;gap:2px">${c.map(m=>`<div style="font-size:.68rem;color:var(--yel);padding:3px 0;border-bottom:1px solid rgba(240,180,41,.1)">⚠ ${m}</div>`).join('')}</div>`:`<div style="color:var(--teal);font-size:.76rem;padding:5px 0">✓ Sin conflictos</div>`;
+  document.getElementById('st-c').innerHTML=c.length?`
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
+      <div style="padding:6px 10px;border-radius:999px;border:1px solid rgba(240,180,41,.28);color:var(--yel);font-family:var(--mono);font-size:.62rem">${activeConflicts.length} pendiente${activeConflicts.length!==1?'s':''}</div>
+      <div style="padding:6px 10px;border-radius:999px;border:1px solid rgba(41,217,194,.22);color:var(--teal);font-family:var(--mono);font-size:.62rem">${approvedCount} aprobada${approvedCount!==1?'s':''}</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px">${[...activeConflicts,...c.filter(conf=>conf.approved)].map(conf=>`
+      <div class="conf-row${conf.ignored?' ignored':''}">
+        <div class="conf-row-main" onclick="goToConflict(${jsArg(conf.id)})">
+          <span class="conf-row-status">${conf.approved?'Aprobada':'Pendiente'}</span>${escapeHtml(conf.message)}
+          ${conf.approval?.note||conf.approval?`<div class="conf-row-note">${conf.approval?.note?escapeHtml(conf.approval.note):'Sin observaciones registradas.'}<span class="conf-row-meta">${escapeHtml(formatApprovalMeta(conf.approval))}</span></div>`:''}
+        </div>
+        <div class="conf-row-acts">
+          <button class="conf-btn" onclick="goToConflict(${jsArg(conf.id)})">Ir</button>
+          ${_isReadOnly?'':conf.approved
+            ? `<button class="conf-btn approval-only" onclick="revokeConflictApproval(${jsArg(conf.id)})">Quitar aprobación</button>`
+            : `<button class="conf-btn approval-only" onclick="openConflictApproval(${jsArg(conf.id)})">Aprobar excepción</button>`}
+        </div>
+      </div>`).join('')}</div>`:`<div style="color:var(--teal);font-size:.76rem;padding:5px 0">✓ Sin conflictos</div>`;
   document.getElementById('st-d').innerHTML=days.length?`<table class="stbl">
     <tr><th>Día</th><th>Rango</th><th>Bloq.</th><th>Total</th></tr>
     ${days.map(d=>{const dAps=aparatos.filter(a=>a.dayId===d.id);let b=0,m=0;dAps.forEach(a=>dayHours(d).forEach(h=>(schedule[`${h}|${a.id}`]||[]).forEach(e=>{b++;m+=e.dur||30;})));return `<tr><td>${d.name}</td><td class="val" style="font-size:.6rem">${d.start}–${d.end}</td><td class="val">${b}</td><td class="val">${fmtT(m)}</td></tr>`;}).join('')}
@@ -1756,32 +2360,206 @@ function openGroupSched(){
   }
   document.getElementById('gs-title').textContent=g.name;
   const tot=slots.reduce((s,sl)=>s+sl.dur,0);
-  document.getElementById('gs-sub').textContent=`Prof. ${g.teacher}${g.cat?' · '+g.cat:''} — ${fmtT(tot)} semanales — ${slots.length} bloque${slots.length!==1?'s':''}`;
+  document.getElementById('gs-sub').textContent=`Profesor/a ${g.teacher}${g.cat?' · '+g.cat:''} · ${fmtT(tot)} semanales · ${slots.length} bloque${slots.length!==1?'s':''}`;
   const content=document.getElementById('gs-content');
-  if(!slots.length){content.innerHTML='<div class="no-data" style="padding:18px;text-align:center">Sin bloques asignados.</div>';}
+  const ord=days.map(d=>d.id);slots.sort((a,b)=>ord.indexOf(a.dayId)-ord.indexOf(b.dayId)||a.h.localeCompare(b.h));
+  const byDay={};slots.forEach(s=>{if(!byDay[s.day])byDay[s.day]=[];byDay[s.day].push(s);});
+  const dns=Object.keys(byDay);
+  if(!slots.length){content.innerHTML='<div class="sb-note" style="margin-top:6px">Este grupo todavía no tiene bloques asignados.</div>';}
   else{
-    const ord=days.map(d=>d.id);slots.sort((a,b)=>ord.indexOf(a.dayId)-ord.indexOf(b.dayId)||a.h.localeCompare(b.h));
-    const byDay={};slots.forEach(s=>{if(!byDay[s.day])byDay[s.day]=[];byDay[s.day].push(s);});
-    const dns=Object.keys(byDay);
-    content.innerHTML=`<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px">
-      ${[{v:fmtT(tot),l:'Total'},{v:slots.length,l:'Bloques'},{v:dns.length,l:'Días'}].map(x=>`<div style="background:${rgba(g.color,.1)};border:1px solid ${rgba(g.color,.3)};border-radius:7px;padding:7px 12px"><div style="color:${g.color};font-weight:700;font-size:.9rem">${x.v}</div><div style="color:var(--tx2);font-size:.6rem">${x.l}</div></div>`).join('')}
-    </div>
-    <table id="gs-tbl" style="width:100%;border-collapse:collapse;font-size:.76rem">
-      <thead><tr>${dns.map(dn=>`<th style="background:var(--s2);color:${g.color};font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.9px;padding:6px 9px;text-align:left;border:1px solid var(--bd)">${dn}</th>`).join('')}</tr></thead>
-      <tbody><tr>${dns.map(dn=>`<td style="vertical-align:top;padding:5px;border:1px solid var(--bd)">
-        ${(byDay[dn]||[]).map(s=>`<div style="padding:5px 7px;margin-bottom:3px;border-radius:5px;background:${rgba(g.color,.1)};border-left:3px solid ${g.color}">
-          <div style="display:flex;align-items:baseline;gap:6px">
-            <span style="font-family:var(--mono);font-size:.74rem">${s.h}</span>
-            <span style="font-size:.64rem;color:var(--tx2)">${s.ap}</span>
-            <span style="font-family:var(--mono);font-size:.6rem;color:${g.color};margin-left:auto">${s.dur}m</span>
-          </div>${s.note?`<div style="font-size:.6rem;color:var(--tx3);font-style:italic;margin-top:2px">${s.note}</div>`:''}</div>`).join('')}
-      </td>`).join('')}</tr></tbody>
-    </table>`;
+    content.innerHTML=`
+      <div class="report-kpis">
+        ${[
+          {v:fmtT(tot),l:'Carga semanal'},
+          {v:slots.length,l:'Bloques'},
+          {v:dns.length,l:'Días'},
+          {v:g.cat||'Sin categoría',l:'Categoría'}
+        ].map(x=>`<div class="report-kpi" style="border-color:${rgba(g.color,.26)};background:${rgba(g.color,.08)}">
+          <strong style="color:${g.color}">${escapeHtml(x.v)}</strong>
+          <span>${escapeHtml(x.l)}</span>
+        </div>`).join('')}
+      </div>
+      <div class="report-days">
+        ${dns.map(dn=>`<section class="report-day">
+          <div class="report-day-head">
+            <strong>${escapeHtml(dn)}</strong>
+            <span>${(byDay[dn]||[]).length} bloque${(byDay[dn]||[]).length!==1?'s':''}</span>
+          </div>
+          ${(byDay[dn]||[]).map(s=>`<div class="report-item" style="border-color:${rgba(g.color,.22)};background:${rgba(g.color,.08)}">
+            <div class="report-item-row">
+              <div class="report-item-time">${s.h}</div>
+              <div class="report-item-main">
+                <div class="report-item-title" style="color:${g.color}">${escapeHtml(s.ap)}</div>
+                <div class="report-item-meta">Termina ${addMins(s.h,s.dur)} · ${s.dur} min</div>
+                ${s.note?`<div class="report-item-note">${escapeHtml(s.note)}</div>`:''}
+              </div>
+            </div>
+          </div>`).join('')}
+        </section>`).join('')}
+      </div>`;
   }
   document.getElementById('modal-gsched').dataset.gid=gid;
   document.getElementById('modal-gsched').classList.add('open');
 }
 function printGS(){window.print();}
+
+// ══════════════════════════════════════════════
+// TEACHER SCHEDULE VIEW
+// ══════════════════════════════════════════════
+function openTeacherSched(){
+  const teacher=document.getElementById('tv-sel').value;
+  if(!teacher)return;
+  closeModals();
+
+  // Collect all groups taught by this teacher
+  const teacherGroups=groups.filter(g=>g.teacher===teacher);
+  if(!teacherGroups.length){toast('Sin grupos para este profesor','warn');return;}
+  const tgIds=new Set(teacherGroups.map(g=>g.id));
+
+  // Build slots
+  const slots=[];
+  for(const key in schedule){
+    const[h,aid]=key.split('|');
+    const ap=aMap().get(aid);
+    const day=ap?dMap().get(ap.dayId):null;
+    (schedule[key]||[]).forEach(e=>{
+      if(!tgIds.has(e.gid))return;
+      const g=gMap().get(e.gid);
+      if(ap&&day)slots.push({day:day.name,dayId:day.id,ap:ap.name,h,dur:e.dur||30,note:e.note||'',gName:g?.name||'',gColor:g?.color||'#888',gCat:g?.cat||''});
+    });
+  }
+
+  document.getElementById('ts-title').textContent=teacher;
+  const tot=slots.reduce((s,sl)=>s+sl.dur,0);
+  const grpList=[...new Set(teacherGroups.map(g=>g.name))].join(', ');
+  document.getElementById('ts-sub').textContent=`${fmtT(tot)} semanales · ${teacherGroups.length} grupo${teacherGroups.length!==1?'s':''} · ${grpList}`;
+
+  const content=document.getElementById('ts-content');
+  if(!slots.length){content.innerHTML='<div class="sb-note" style="margin-top:6px">Este/a profesor/a todavía no tiene bloques asignados.</div>';document.getElementById('modal-tsched').classList.add('open');return;}
+
+  const ord=days.map(d=>d.id);
+  slots.sort((a,b)=>ord.indexOf(a.dayId)-ord.indexOf(b.dayId)||a.h.localeCompare(b.h));
+  const byDay={};slots.forEach(s=>{if(!byDay[s.day])byDay[s.day]=[];byDay[s.day].push(s);});
+  const dns=Object.keys(byDay);
+
+  content.innerHTML=`
+    <div class="report-kpis">
+      ${[{v:fmtT(tot),l:'Carga semanal'},{v:slots.length,l:'Bloques'},{v:dns.length,l:'Días'},{v:teacherGroups.length,l:'Grupos'}].map(x=>`
+        <div class="report-kpi">
+          <strong style="color:var(--acc)">${escapeHtml(String(x.v))}</strong>
+          <span>${escapeHtml(x.l)}</span>
+        </div>`).join('')}
+    </div>
+    <div class="report-days">${dns.map(dn=>`<section class="report-day">
+      <div class="report-day-head">
+        <strong>${escapeHtml(dn)}</strong>
+        <span>${(byDay[dn]||[]).length} bloque${(byDay[dn]||[]).length!==1?'s':''}</span>
+      </div>
+        ${(byDay[dn]||[]).map(s=>{
+          const _cr=parseInt(s.gColor.slice(1,3),16),_cg=parseInt(s.gColor.slice(3,5),16),_cb=parseInt(s.gColor.slice(5,7),16);
+          const _lum=(_cr*299+_cg*587+_cb*114)/1000;
+          const tc=_lum>145?'rgba(0,0,0,.85)':'rgba(255,255,255,.95)';
+          return `<div class="report-item" style="background:${s.gColor};color:${tc};border-color:${rgba(s.gColor,.48)}">
+            <div class="report-item-row">
+              <div class="report-item-time">${s.h}</div>
+              <div class="report-item-main">
+                <div class="report-item-title">${escapeHtml(s.gName)}</div>
+                <div class="report-item-meta">${escapeHtml(s.ap)} · ${s.dur} min · termina ${addMins(s.h,s.dur)}</div>
+                ${s.gCat?`<div class="report-item-note" style="opacity:.8;font-style:normal">${escapeHtml(s.gCat)}</div>`:''}
+                ${s.note?`<div class="report-item-note">${escapeHtml(s.note)}</div>`:''}
+              </div>
+            </div>
+          </div>`;
+        }).join('')}
+    </section>`).join('')}</div>`;
+
+  document.getElementById('modal-tsched').dataset.teacher=teacher;
+  document.getElementById('modal-tsched').classList.add('open');
+}
+
+function exportTeacherPNG(){
+  const teacher=document.getElementById('modal-tsched').dataset.teacher;
+  if(!teacher)return;
+  const teacherGroups=groups.filter(g=>g.teacher===teacher);
+  const tgIds=new Set(teacherGroups.map(g=>g.id));
+  const slots=[];
+  for(const key in schedule){
+    const[h,aid]=key.split('|');const ap=aMap().get(aid);const day=ap?dMap().get(ap.dayId):null;
+    (schedule[key]||[]).forEach(e=>{
+      if(!tgIds.has(e.gid))return;
+      const g=gMap().get(e.gid);
+      if(ap&&day)slots.push({day:day.name,dayId:day.id,ap:ap.name,h,dur:e.dur||30,note:e.note||'',gName:g?.name||'',gColor:g?.color||'#5ba3ff',gCat:g?.cat||''});
+    });
+  }
+  if(!slots.length){toast('Sin bloques','warn');return;}
+  const ord=days.map(d=>d.id);slots.sort((a,b)=>ord.indexOf(a.dayId)-ord.indexOf(b.dayId)||a.h.localeCompare(b.h));
+  const byDay={};slots.forEach(s=>{if(!byDay[s.day])byDay[s.day]=[];byDay[s.day].push(s);});
+  const dns=Object.keys(byDay);
+  const tot=slots.reduce((s,sl)=>s+sl.dur,0);
+  const DPR=2,PAD=26,COL=200,ROW=50,H1=44,H2=26,TH=60,SH=38;
+  const maxR=Math.max(...dns.map(d=>byDay[d].length));
+  const W=PAD*2+dns.length*COL,H=TH+SH+H1+H2+maxR*ROW+PAD;
+  const cv=document.createElement('canvas');cv.width=W*DPR;cv.height=H*DPR;
+  const cx=cv.getContext('2d');cx.scale(DPR,DPR);
+  cx.fillStyle='#0c0d10';cx.fillRect(0,0,W,H);
+  cx.fillStyle='#c8f135';cx.fillRect(0,0,W,3);
+  cx.fillStyle='#e8eaf0';cx.font='800 18px Plus Jakarta Sans,sans-serif';cx.textAlign='left';cx.fillText(teacher,PAD,30);
+  cx.fillStyle='#9498a8';cx.font='500 9px IBM Plex Mono,monospace';cx.fillText(`${fmtT(tot)} semanales · ${teacherGroups.length} grupo${teacherGroups.length!==1?'s':''}${clubName?' · '+clubName:''}`,PAD,45);
+  cx.fillStyle='rgba(200,241,53,.07)';cx.fillRect(PAD,TH,W-PAD*2,SH);
+  cx.fillStyle='rgba(200,241,53,.55)';cx.font='600 8px IBM Plex Mono,monospace';cx.textAlign='left';cx.fillText(`${slots.length} bloques · ${dns.length} días`,PAD+8,TH+SH/2+3);
+  cx.fillStyle='rgba(200,241,53,.18)';cx.textAlign='right';cx.fillText('GymRotate Pro',W-PAD,TH+SH/2+3);
+  const tY=TH+SH;
+  dns.forEach((dn,di)=>{
+    const x=PAD+di*COL,isLast=di===dns.length-1;
+    cx.fillStyle='#131417';cx.fillRect(x,tY,COL-(isLast?0:1),H1);
+    cx.fillStyle='#c8f135';cx.font='700 8px Plus Jakarta Sans,sans-serif';cx.textAlign='center';cx.fillText(dn.toUpperCase(),x+COL/2,tY+16);
+    cx.fillStyle='rgba(200,241,53,.38)';cx.font='400 7px IBM Plex Mono,monospace';cx.fillText(`${byDay[dn].length} bloque${byDay[dn].length!==1?'s':''}`,x+COL/2,tY+30);
+    cx.fillStyle='#1a1b20';cx.fillRect(x,tY+H1,COL-(isLast?0:1),H2);
+    cx.fillStyle='rgba(200,241,53,.3)';cx.font='500 6px IBM Plex Mono,monospace';cx.textAlign='left';
+    cx.fillText('HORA',x+7,tY+H1+16);cx.fillText('GRUPO',x+50,tY+H1+16);cx.fillText('APARATO',x+130,tY+H1+16);
+    byDay[dn].forEach((s,ri)=>{
+      const ry=tY+H1+H2+ri*ROW;
+      const _cr=parseInt(s.gColor.slice(1,3),16),_cg2=parseInt(s.gColor.slice(3,5),16),_cb2=parseInt(s.gColor.slice(5,7),16);
+      const _lum=(_cr*299+_cg2*587+_cb2*114)/1000;
+      const tc=_lum>145?'rgba(0,0,0,.85)':'rgba(255,255,255,.95)';
+      cx.fillStyle=s.gColor;cx.fillRect(x+2,ry+4,COL-4,ROW-8);
+      cx.fillStyle=tc;
+      cx.font='700 9px Plus Jakarta Sans,sans-serif';cx.textAlign='left';cx.fillText(s.h,x+7,ry+16);
+      cx.font='600 8px Plus Jakarta Sans,sans-serif';cx.fillText(s.gName.length>12?s.gName.slice(0,11)+'…':s.gName,x+50,ry+16);
+      cx.font='400 7px IBM Plex Mono,monospace';cx.fillText(s.ap.length>10?s.ap.slice(0,9)+'…':s.ap,x+130,ry+16);
+      cx.font='400 6px IBM Plex Mono,monospace';cx.fillText(`${s.dur}m`,x+185,ry+16);
+      if(s.gCat){cx.font='400 6px IBM Plex Mono,monospace';cx.fillText(s.gCat.length>14?s.gCat.slice(0,13)+'…':s.gCat,x+7,ry+27);}
+      if(s.note){cx.font='italic 6px IBM Plex Mono,monospace';cx.fillText(s.note.length>20?s.note.slice(0,19)+'…':s.note,x+7,ry+36);}
+    });
+    if(!isLast){cx.strokeStyle='#2c2e38';cx.lineWidth=1;cx.beginPath();cx.moveTo(x+COL-.5,tY);cx.lineTo(x+COL-.5,H-PAD/2);cx.stroke();}
+  });
+  cx.strokeStyle='rgba(200,241,53,.12)';cx.lineWidth=1;cx.strokeRect(PAD,tY,W-PAD*2,H-tY-PAD/2);
+  const link=document.createElement('a');
+  link.download=getEntityExportFilename('profe',teacher,'png');
+  link.href=cv.toDataURL('image/png');link.click();
+  toast(`PNG de "${teacher}" descargado ✓`);
+}
+async function exportTeacherPDF(){
+  const teacher=document.getElementById('modal-tsched').dataset.teacher;
+  const modal=document.querySelector('#modal-tsched .modal');
+  if(!teacher||!modal){toast('Abrí primero la vista del profe','warn');return;}
+  const cv=await renderNodeCanvas(modal,{width:'960px'});
+  if(!cv)return;
+  await ensureJsPdf();
+  saveCanvasAsPdf(cv,getEntityExportFilename('profe',teacher,'pdf'));
+  toast(`PDF de "${teacher}" descargado ✓`);
+}
+async function exportGroupPDF(){
+  const gid=document.getElementById('modal-gsched').dataset.gid;
+  const g=gMap().get(gid);
+  const modal=document.querySelector('#modal-gsched .modal');
+  if(!g||!modal){toast('Abrí primero la vista del grupo','warn');return;}
+  const cv=await renderNodeCanvas(modal,{width:'960px'});
+  if(!cv)return;
+  await ensureJsPdf();
+  saveCanvasAsPdf(cv,getEntityExportFilename('grupo',g.name,'pdf'));
+  toast(`PDF de "${g.name}" descargado ✓`);
+}
 function exportGroupPNG(){
   const gid=document.getElementById('modal-gsched').dataset.gid;
   const g=gMap().get(gid);if(!g)return;
@@ -1828,7 +2606,7 @@ function exportGroupPNG(){
     if(!isLast){cx.strokeStyle='#2c2e38';cx.lineWidth=1;cx.beginPath();cx.moveTo(x+COL-.5,tY);cx.lineTo(x+COL-.5,H-PAD/2);cx.stroke();}
   });
   cx.strokeStyle=rgba(g.color,.12);cx.lineWidth=1;cx.strokeRect(PAD,tY,W-PAD*2,H-tY-PAD/2);
-  const link=document.createElement('a');link.download=`horario_${g.name.replace(/[^a-z0-9]/gi,'_').toLowerCase()}.png`;link.href=cv.toDataURL('image/png');link.click();
+  const link=document.createElement('a');link.download=getEntityExportFilename('grupo',g.name,'png');link.href=cv.toDataURL('image/png');link.click();
   toast(`PNG de "${g.name}" descargado ✓`);
 }
 
@@ -1866,7 +2644,7 @@ function exportICal(){
   dl(ical,'horarios.ics','text/calendar;charset=utf-8');closeModals();toast('iCal descargado ✓');
 }
 function exportJSON(){
-  dl(JSON.stringify({groups,days,aparatos,schedule,clubName,exportedAt:new Date().toISOString()},null,2),'gymrotate-backup.json','application/json');
+  dl(JSON.stringify({groups,days,aparatos,schedule,ignoredConflicts,clubName,exportedAt:new Date().toISOString()},null,2),'gymrotate-backup.json','application/json');
   closeModals();toast('JSON backup descargado ✓');
 }
 function dl(data,filename,type){const blob=new Blob([data],{type});const a=document.createElement('a');a.download=filename;a.href=URL.createObjectURL(blob);a.click();URL.revokeObjectURL(a.href);}
@@ -1874,20 +2652,16 @@ function dl(data,filename,type){const blob=new Blob([data],{type});const a=docum
 // ══════════════════════════════════════════════
 // PNG EXPORT (full table)
 // ══════════════════════════════════════════════
-async function exportPNG(){
-  const tbl=document.getElementById('sched-table');
-  if(!tbl){toast('Sin tabla para exportar','warn');return;}
-  const btn=document.querySelector('.tbtn[onclick="exportPNG()"]');
-  if(btn){btn.textContent='...';btn.disabled=true;}
-  tbl.classList.add('snap');
-  await new Promise(r=>setTimeout(r,60));
-  const bgColor=getComputedStyle(document.body).getPropertyValue('--bg').trim()||'#0c0d10';
+async function exportPNG(dayIds){
   try{
-    const cv=await html2canvas(tbl,{backgroundColor:bgColor,scale:2,useCORS:true,logging:false});
-    const a=document.createElement('a');a.download='cronograma.png';a.href=cv.toDataURL('image/png');a.click();
+    const cv=await renderScheduleCanvas(dayIds);
+    if(!cv)return;
+    const a=document.createElement('a');
+    a.download=getExportFilenameBase('png',dayIds);
+    a.href=cv.toDataURL('image/png');
+    a.click();
     toast('PNG descargado ✓');
   }catch(err){toast('Error: '+err.message,'warn');}
-  finally{tbl.classList.remove('snap');if(btn){btn.textContent='PNG';btn.disabled=false;}}
 }
 
 // ══════════════════════════════════════════════
@@ -1896,12 +2670,60 @@ async function exportPNG(){
 let isDark = LS.load('gr4_dark', true);
 function applyTheme(){
   document.body.classList.toggle('light', !isDark);
-  document.getElementById('theme-btn').textContent = isDark ? '🌙' : '☀️';
+  const meta=document.querySelector('meta[name="theme-color"]');
+  if(meta)meta.setAttribute('content',isDark?'#0c0d10':'#f7f6f3');
+  const btn=document.getElementById('theme-btn');
+  if(btn){
+    btn.textContent=isDark?'Oscuro':'Claro';
+    btn.title=isDark?'Cambiar a tema claro':'Cambiar a tema oscuro';
+  }
 }
 function toggleTheme(){
   isDark = !isDark;
   LS.save('gr4_dark', isDark);
   applyTheme();
+}
+
+let deferredInstallPrompt=null;
+function canUsePWA(){
+  return location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1';
+}
+function isStandalonePWA(){
+  return window.matchMedia?.('(display-mode: standalone)').matches||window.navigator.standalone===true;
+}
+function updateInstallUI(){
+  const btn=document.getElementById('install-btn');
+  if(!btn)return;
+  if(isStandalonePWA()){btn.hidden=true;return;}
+  btn.hidden=false;
+  btn.disabled=false;
+  btn.textContent='Instalar app';
+  btn.title=location.protocol==='file:'?'Abrila desde localhost o un dominio seguro para instalarla':'Instalar GymRotate como app';
+}
+async function triggerInstall(){
+  if(isStandalonePWA()){toast('La app ya está instalada');updateInstallUI();return;}
+  if(location.protocol==='file:'){toast('Para instalarla como app, abrila desde localhost o un dominio seguro.','warn');return;}
+  if(!deferredInstallPrompt){toast('La instalación todavía no está disponible en este navegador.','warn');return;}
+  const promptEvent=deferredInstallPrompt;
+  deferredInstallPrompt=null;
+  promptEvent.prompt();
+  await promptEvent.userChoice.catch(()=>null);
+  updateInstallUI();
+}
+function initPWA(){
+  updateInstallUI();
+  window.addEventListener('beforeinstallprompt',event=>{
+    event.preventDefault();
+    deferredInstallPrompt=event;
+    updateInstallUI();
+  });
+  window.addEventListener('appinstalled',()=>{
+    deferredInstallPrompt=null;
+    updateInstallUI();
+    toast('App instalada ✓');
+  });
+  if(!canUsePWA()||!('serviceWorker' in navigator))return;
+  navigator.serviceWorker.register('./sw.js').catch(()=>{});
 }
 
 // ══════════════════════════════════════════════
@@ -1946,7 +2768,7 @@ function onApColDrop(e, aid){
   if(!srcAp || !dstAp || srcAp.dayId !== dstAp.dayId){
     apDragId=null; apDragOver=null; return;
   }
-  snap();
+  if(!snap())return;
   const si = aparatos.indexOf(srcAp);
   const di = aparatos.indexOf(dstAp);
   aparatos.splice(si, 1);
@@ -1955,212 +2777,189 @@ function onApColDrop(e, aid){
   saveAll(); renderTable(); toast('Aparato reordenado ✓');
 }
 
-// ══════════════════════════════════════════════
-// PDF EXPORT (via jsPDF — pure client-side, no screenshot)
-// ══════════════════════════════════════════════
-async function exportPDF(){
-  if(typeof window.jspdf === 'undefined'){
-    toast('Cargando librería PDF…');
-    await new Promise((res,rej)=>{
-      const s=document.createElement('script');
-      s.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-      s.onload=res; s.onerror=rej;
-      document.head.appendChild(s);
+let currentExportMode='pdf';
+function pdfDayToggleAll(v){
+  document.querySelectorAll('#pdf-day-list input[type=checkbox]').forEach(cb=>cb.checked=v);
+}
+function openExportDays(mode='pdf'){
+  currentExportMode=mode;
+  const isPng=mode==='png';
+  document.getElementById('export-days-title').textContent=isPng?'Exportar PNG':'Exportar PDF';
+  document.getElementById('export-days-desc').textContent=isPng?'Elegi que dias incluir en la imagen.':'Elegi que dias incluir en el PDF.';
+  document.getElementById('export-days-submit').textContent=isPng?'Generar PNG':'Generar PDF';
+  closeModals();
+  openModal('modal-pdf-cfg');
+}
+function getSelectedExportDayIds(dayIds){
+  return Array.isArray(dayIds)&&dayIds.length
+    ? days.filter(d=>dayIds.includes(d.id)).map(d=>d.id)
+    : days.map(d=>d.id);
+}
+function exportSelectedDays(){
+  const selected=[...document.querySelectorAll('#pdf-day-list input[type=checkbox]:checked')].map(cb=>cb.dataset.did);
+  if(!selected.length){toast('Elegi al menos un dia','warn');return;}
+  closeModals();
+  if(currentExportMode==='png')return exportPNG(selected);
+  return exportPDF(selected);
+}
+function getSelectedDaySlug(dayIds){
+  const selected=getSelectedExportDayIds(dayIds);
+  if(!selected.length)return 'sin-dias';
+  if(selected.length===days.length)return 'semana-completa';
+  return selected.map(id=>slugify(dMap().get(id)?.name||id)).join('-');
+}
+function getExportFilenameBase(ext,dayIds){
+  return `horario-${getSelectedDaySlug(dayIds)}-${slugify(clubName||'gimnasia')}.${ext}`;
+}
+function getEntityExportFilename(kind,name,ext){
+  return `horario-${kind}-${slugify(name)}-${slugify(clubName||'gimnasia')}.${ext}`;
+}
+function getExportCanvasScale(node){
+  const rect=node.getBoundingClientRect();
+  const width=Math.max(node.scrollWidth,node.offsetWidth,rect.width||0);
+  const height=Math.max(node.scrollHeight,node.offsetHeight,rect.height||0);
+  const area=Math.max(1,width*height);
+  return Math.max(1,Math.min(2,Math.sqrt(18000000/area)));
+}
+async function ensureJsPdf(){
+  if(typeof window.jspdf!=='undefined')return;
+  toast('Cargando libreria PDF...');
+  await new Promise((res,rej)=>{
+    const s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+    s.onload=res;
+    s.onerror=rej;
+    document.head.appendChild(s);
+  });
+}
+function saveCanvasAsPdf(cv,filename){
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:cv.width>=cv.height?'landscape':'portrait',unit:'mm',format:'a4'});
+  const PW=doc.internal.pageSize.getWidth();
+  const PH=doc.internal.pageSize.getHeight();
+  const PAD=10;
+  const imgW=PW-PAD*2;
+  const imgH=cv.height*imgW/cv.width;
+  const pageH=PH-PAD*2;
+  const data=cv.toDataURL('image/png');
+  let heightLeft=imgH;
+  let position=PAD;
+  doc.addImage(data,'PNG',PAD,position,imgW,imgH,undefined,'FAST');
+  heightLeft-=pageH;
+  while(heightLeft>0.1){
+    doc.addPage();
+    position=PAD-(imgH-heightLeft);
+    doc.addImage(data,'PNG',PAD,position,imgW,imgH,undefined,'FAST');
+    heightLeft-=pageH;
+  }
+  doc.save(filename);
+}
+async function renderNodeCanvas(node,{width=null}={}){
+  if(typeof html2canvas==='undefined'){toast('La exportacion todavia se esta cargando','warn');return null;}
+  if(!node)return null;
+  const stage=document.createElement('div');
+  stage.className='export-stage';
+  const sheet=document.createElement('div');
+  sheet.className='export-sheet snap';
+  const clone=node.cloneNode(true);
+  clone.removeAttribute('id');
+  clone.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
+  clone.querySelectorAll('button').forEach(btn=>btn.remove());
+  if(width){
+    clone.style.width=width;
+    clone.style.maxWidth='none';
+  }
+  sheet.appendChild(clone);
+  stage.appendChild(sheet);
+  document.body.appendChild(stage);
+  const bgColor=getComputedStyle(document.body).getPropertyValue('--bg').trim()||'#0c0d10';
+  try{
+    if(document.fonts?.ready)await document.fonts.ready;
+    await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+    return await html2canvas(sheet,{backgroundColor:bgColor,scale:getExportCanvasScale(sheet),useCORS:true,logging:false});
+  }finally{
+    stage.remove();
+  }
+}
+function pruneExportTable(table,dayIds){
+  const keepDays=new Set(dayIds);
+  const keepCols=[];
+  days.forEach(d=>{
+    const count=aparatos.filter(a=>a.dayId===d.id).length||1;
+    for(let i=0;i<count;i++)keepCols.push(keepDays.has(d.id));
+  });
+  const headRows=table.querySelectorAll('thead tr');
+  if(headRows[0]){
+    [...headRows[0].children].forEach((cell,idx)=>{
+      if(idx&&cell.dataset.did&&!keepDays.has(cell.dataset.did))cell.remove();
     });
   }
-  closeModals();
-  const {jsPDF} = window.jspdf;
-  const isLight = !isDark;
-
-  // ── Page setup ──
-  const doc = new jsPDF({ orientation:'landscape', unit:'mm', format:'a4' });
-  const PW = doc.internal.pageSize.getWidth();   // 297
-  const PH = doc.internal.pageSize.getHeight();  // 210
-  const PAD = 10;
-  const bgCol   = isLight ? [244,245,247] : [12,13,16];
-  const s1Col   = isLight ? [255,255,255] : [19,20,23];
-  const s2Col   = isLight ? [238,240,243] : [26,27,32];
-  const txCol   = isLight ? [26,28,34]    : [232,234,240];
-  const tx2Col  = isLight ? [90,95,115]   : [148,152,168];
-  const tx3Col  = isLight ? [148,153,171] : [85,88,104];
-  const bdCol   = isLight ? [208,211,220] : [44,46,56];
-  const accCol  = isLight ? [90,158,0]    : [200,241,53];
-  const tealCol = isLight ? [26,170,150]  : [41,217,194];
-
-  const setFill = (col) => doc.setFillColor(...col);
-  const setDraw = (col) => doc.setDrawColor(...col);
-  const setTxt  = (col) => doc.setTextColor(...col);
-
-  // ── Background ──
-  setFill(bgCol); doc.rect(0,0,PW,PH,'F');
-
-  // ── Title bar ──
-  const titleBarH = 12;
-  setFill(s1Col); doc.rect(0,0,PW,titleBarH,'F');
-  setFill(accCol); doc.rect(0,0,PW,1,'F');
-  setTxt(accCol);
-  doc.setFont('helvetica','bold'); doc.setFontSize(9);
-  doc.text('GymRotate Pro', PAD, 8);
-  if(clubName){ setTxt(tx2Col); doc.setFont('helvetica','normal'); doc.setFontSize(7); doc.text(clubName, PAD+28, 8); }
-  setTxt(tx3Col); doc.setFont('helvetica','normal'); doc.setFontSize(6);
-  doc.text(`Generado: ${new Date().toLocaleDateString('es-AR')}`, PW-PAD, 8, {align:'right'});
-
-  let curY = titleBarH + 4;
-
-  // ── For each day build a table ──
-  const ah = allHours();
-  const COL_TIME = 14;
-  const AP_MIN_W = 28;
-
-  days.forEach((day, dayIdx) => {
-    const dAps = aparatos.filter(a => a.id && a.dayId === day.id);
-    if(!dAps.length) return;
-    const dh = dayHours(day);
-    const dayColor = DAY_COLORS[dayIdx % DAY_COLORS.length];
-    const [dr,dg,db] = dayColor.startsWith('#')
-      ? [parseInt(dayColor.slice(1,3),16),parseInt(dayColor.slice(3,5),16),parseInt(dayColor.slice(5,7),16)]
-      : [200,241,53];
-
-    // Available width for this day's table
-    const tableW = PW - PAD*2;
-    const apColW = Math.max(AP_MIN_W, (tableW - COL_TIME) / dAps.length);
-    const ROW_H = 5.5;
-    const HEAD_H = 10;
-    const HEAD_H2 = 7;
-
-    // Check if need new page
-    const tableH = HEAD_H + HEAD_H2 + dh.length * ROW_H + 2;
-    if(curY + tableH > PH - PAD && dayIdx > 0){
-      doc.addPage();
-      setFill(bgCol); doc.rect(0,0,PW,PH,'F');
-      curY = PAD;
-    }
-
-    // Day header
-    setFill([dr,dg,db]);
-    doc.rect(PAD, curY, tableW, HEAD_H, 'F');
-    doc.setFont('helvetica','bold'); doc.setFontSize(8);
-    doc.setTextColor(isLight ? 20:10, isLight ? 20:10, isLight ? 20:10);
-    doc.text(day.name.toUpperCase(), PAD+3, curY + 6.5);
-    doc.setFont('helvetica','normal'); doc.setFontSize(6);
-    doc.setTextColor(isLight ? 40:30, isLight ? 40:30, isLight ? 40:30);
-    doc.text(`${day.start} – ${day.end}`, PAD+3, curY + 9.5);
-    curY += HEAD_H;
-
-    // Aparato sub-headers
-    setFill(s2Col); doc.rect(PAD, curY, tableW, HEAD_H2, 'F');
-    // Time label
-    setTxt(tx3Col); doc.setFont('helvetica','bold'); doc.setFontSize(5.5);
-    doc.text('HORA', PAD+1, curY+4.5);
-    dAps.forEach((ap, ai) => {
-      const x = PAD + COL_TIME + ai * apColW;
-      setDraw(bdCol); doc.line(x, curY, x, curY+HEAD_H2);
-      setTxt(tealCol); doc.setFont('helvetica','bold'); doc.setFontSize(5.5);
-      const apLabel = ap.name.length > 18 ? ap.name.slice(0,17)+'…' : ap.name;
-      doc.text(apLabel, x+2, curY+4.5);
-      if(ap.cap > 0){
-        setTxt(tx3Col); doc.setFont('helvetica','normal'); doc.setFontSize(4.5);
-        doc.text(`Máx. ${ap.cap}`, x+2, curY+8);
-      }
-    });
-    setDraw(bdCol); doc.line(PAD, curY+HEAD_H2, PAD+tableW, curY+HEAD_H2);
-    curY += HEAD_H2;
-
-    // Build occMap for this day
-    const occMap = {};
-    for(const key in schedule){
-      const[startH,aid] = key.split('|');
-      const ap = aMap().get(aid); if(!ap||ap.dayId!==day.id) continue;
-      const si = dh.indexOf(startH); if(si<0) continue;
-      if(!occMap[aid]) occMap[aid]={};
-      (schedule[key]||[]).forEach(entry=>{
-        const slots = toSlots(entry.dur||30);
-        for(let i=0;i<slots;i++){
-          if(si+i>=dh.length) break;
-          const h = dh[si+i];
-          if(!occMap[aid][h]) occMap[aid][h]=[];
-          occMap[aid][h].push({gid:entry.gid,isStart:i===0,dur:entry.dur||30,startKey:key});
-        }
-      });
-    }
-
-    // Rows
-    dh.forEach((h, hi) => {
-      const y = curY + hi * ROW_H;
-      const onHr = h.endsWith(':00');
-      // Alternating row bg
-      if(hi%2===0){ setFill(isLight?[249,250,252]:[15,16,20]); doc.rect(PAD,y,tableW,ROW_H,'F'); }
-      // Hour border
-      if(onHr){ setDraw(bdCol); doc.line(PAD,y,PAD+tableW,y); }
-
-      // Time cell
-      setTxt(onHr ? tx2Col : tx3Col);
-      doc.setFont('helvetica', onHr?'bold':'normal'); doc.setFontSize(5.5);
-      if(onHr) doc.text(h, PAD+COL_TIME-1, y+3.8, {align:'right'});
-
-      // Vertical time separator
-      setDraw(bdCol); doc.line(PAD+COL_TIME, curY-HEAD_H2, PAD+COL_TIME, curY+dh.length*ROW_H);
-
-      dAps.forEach((ap, ai) => {
-        const x = PAD + COL_TIME + ai * apColW;
-        // Vertical ap separator
-        if(ai>0){ setDraw(isLight?[220,223,232]:[35,37,46]); doc.line(x,y,x,y+ROW_H); }
-
-        const oList = occMap[ap.id]?.[h] || [];
-        oList.filter(o=>o.isStart).forEach(o=>{
-          const g = gMap().get(o.gid); if(!g) return;
-          const blockH = toSlots(o.dur)*ROW_H - 0.5;
-          const [cr,cg,cb] = [parseInt(g.color.slice(1,3),16),parseInt(g.color.slice(3,5),16),parseInt(g.color.slice(5,7),16)];
-          // Block fill
-          doc.setFillColor(cr,cg,cb,0.18); // transparent fill
-          doc.setFillColor(Math.min(255,isLight?cr*0.15+230:cr*0.12+12),
-                           Math.min(255,isLight?cg*0.15+230:cg*0.12+12),
-                           Math.min(255,isLight?cb*0.15+230:cb*0.12+12));
-          doc.rect(x+0.3, y+0.3, apColW-0.6, blockH-0.3, 'F');
-          // Left accent bar
-          doc.setFillColor(cr,cg,cb);
-          doc.rect(x+0.3, y+0.3, 1.5, blockH-0.3, 'F');
-          // Group name
-          doc.setTextColor(cr,cg,cb);
-          doc.setFont('helvetica','bold'); doc.setFontSize(5);
-          const nameLabel = g.name.length>20?g.name.slice(0,19)+'…':g.name;
-          doc.text(nameLabel, x+3, y+3.5);
-          // Teacher
-          if(blockH > 8){
-            setTxt(tx2Col); doc.setFont('helvetica','normal'); doc.setFontSize(4);
-            doc.text(g.teacher.length>22?g.teacher.slice(0,21)+'…':g.teacher, x+3, y+7);
-          }
-          // Duration
-          if(blockH > 12){
-            setTxt(tx3Col); doc.setFontSize(4);
-            doc.text(`${o.dur}m`, x+3, y+10.5);
-          }
-        });
-      });
-    });
-
-    // Bottom border of day
-    setDraw(bdCol);
-    doc.line(PAD, curY+dh.length*ROW_H, PAD+tableW, curY+dh.length*ROW_H);
-    // Left/right borders
-    doc.rect(PAD, curY-HEAD_H2, tableW, HEAD_H2+dh.length*ROW_H);
-
-    curY += dh.length * ROW_H + 8;
+  if(headRows[1]){
+    const cols=[...headRows[1].children];
+    for(let i=cols.length-1;i>=0;i--)if(!keepCols[i])cols[i].remove();
+  }
+  table.querySelectorAll('tbody tr').forEach(row=>{
+    const cols=[...row.children];
+    for(let i=cols.length-1;i>=1;i--)if(!keepCols[i-1])cols[i].remove();
   });
-
-  // ── Footer ──
-  doc.setFont('helvetica','normal'); doc.setFontSize(5);
-  setTxt(tx3Col);
-  doc.text('GymRotate Pro · gymrotate', PAD, PH-4);
-  doc.text(`Pág. 1 de ${doc.getNumberOfPages()}`, PW-PAD, PH-4, {align:'right'});
-
-  doc.save(`horarios-${(clubName||'gimnasia').replace(/[^a-z0-9]/gi,'_').toLowerCase()}.pdf`);
-  toast('PDF descargado ✓');
+  table.querySelectorAll('.day-acts,.th-ap-acts,.blk-acts,#time-ruler').forEach(el=>el.remove());
 }
-
-// ══════════════════════════════════════════════
-// FLOATING TIME RULER
-// ══════════════════════════════════════════════
+function buildScheduleExportStage(dayIds){
+  const exportDayIds=getSelectedExportDayIds(dayIds);
+  if(!exportDayIds.length){toast('Sin dias para exportar','warn');return null;}
+  if(!document.getElementById('sched-table'))renderTable();
+  const source=document.getElementById('table-wrap');
+  if(!source){toast('Sin tabla para exportar','warn');return null;}
+  const stage=document.createElement('div');
+  stage.className='export-stage';
+  const sheet=document.createElement('div');
+  sheet.className='export-sheet snap';
+  const clone=source.cloneNode(true);
+  clone.removeAttribute('id');
+  clone.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
+  const zoom=clone.querySelector('.table-zoom');
+  if(zoom){zoom.style.width='';zoom.style.height='';zoom.classList.remove('zoomed');}
+  const table=clone.querySelector('table');
+  if(!table){stage.remove();return null;}
+  table.style.transform='none';
+  table.style.transformOrigin='top left';
+  pruneExportTable(table,exportDayIds);
+  const dayNames=days.filter(d=>exportDayIds.includes(d.id)).map(d=>d.name).join(' / ');
+  const meta=document.createElement('div');
+  meta.style.cssText='display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px;';
+  meta.innerHTML=`
+    <div>
+      <div style="font-size:1rem;font-weight:800;color:var(--tx)">${clubName||'GymRotate Pro'}</div>
+      <div style="font-size:.68rem;color:var(--tx2);margin-top:3px">${dayNames||'Horario semanal completo'}</div>
+    </div>
+    <div style="font-family:var(--mono);font-size:.62rem;color:var(--tx3);text-align:right">Exportado ${new Date().toLocaleDateString('es-AR')}</div>`;
+  sheet.appendChild(meta);
+  sheet.appendChild(clone);
+  stage.appendChild(sheet);
+  document.body.appendChild(stage);
+  return {stage,sheet};
+}
+async function renderScheduleCanvas(dayIds){
+  if(typeof html2canvas==='undefined'){toast('La exportacion todavia se esta cargando','warn');return null;}
+  const built=buildScheduleExportStage(dayIds);
+  if(!built)return null;
+  const {stage,sheet}=built;
+  const bgColor=getComputedStyle(document.body).getPropertyValue('--bg').trim()||'#0c0d10';
+  try{
+    if(document.fonts?.ready)await document.fonts.ready;
+    await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+    const scale=getExportCanvasScale(sheet);
+    return await html2canvas(sheet,{backgroundColor:bgColor,scale,useCORS:true,logging:false});
+  }finally{
+    stage.remove();
+  }
+}
+async function exportPDF(dayIds){
+  await ensureJsPdf();
+  const cv=await renderScheduleCanvas(dayIds);
+  if(!cv)return;
+  saveCanvasAsPdf(cv,getExportFilenameBase('pdf',dayIds));
+}
 function onTableMouseMove(e){
   const ruler=document.getElementById('time-ruler');
   const wrap=document.getElementById('table-wrap');
@@ -2183,7 +2982,7 @@ function onTableMouseMove(e){
   const h=ah[rowIndex];
   const fracY=(bodyY - rowIndex*SLOT_H) / SLOT_H;
   const[hh,mm]=h.split(':').map(Number);
-  const totalMin=hh*60+mm+Math.round(fracY*10);
+  const totalMin=hh*60+mm+Math.round(fracY*GRID_STEP_MIN);
   const dispH=String(Math.floor(totalMin/60)).padStart(2,'0');
   const dispM=String(totalMin%60).padStart(2,'0');
 
@@ -2223,7 +3022,7 @@ function onDayColDL(e, did){
 function onDayColDrop(e, did){
   e.preventDefault();e.stopPropagation();
   if(!dayDragId||dayDragId===did){dayDragId=null;dayDragOver=null;return;}
-  snap();
+  if(!snap())return;
   const si=days.findIndex(d=>d.id===dayDragId);
   const di=days.findIndex(d=>d.id===did);
   if(si>=0&&di>=0){days.splice(di,0,days.splice(si,1)[0]);}
@@ -2243,6 +3042,7 @@ function closeCellPop(){
 function onCellClick(e, key){
   // Ignore if clicking on a block or its children
   if(e.target.closest('.blk'))return;
+  if(_isReadOnly)return;
   e.stopPropagation();
   closeCellPop();
 
@@ -2266,7 +3066,7 @@ function onCellClick(e, key){
     <div class="cell-pop-hour">${day.name} · ${h}</div>
     <div class="cell-pop-dur">
       <span>Duración</span>
-      <input type="number" id="cpop-dur" value="${durVal}" min="10" max="480" step="10">
+      <input type="number" id="cpop-dur" value="${durVal}" min="5" max="480" step="5">
       <span>min</span>
     </div>
     <div class="cell-pop-groups">${available.map(g=>`
@@ -2296,7 +3096,7 @@ function onCellClick(e, key){
 function cellPopAssign(key, gid){
   if(_isReadOnly){closeCellPop();toast('Iniciá sesión para editar','warn');return;}
   const durInp=document.getElementById('cpop-dur');
-  const durMins=durInp?Math.max(10,Math.round((parseInt(durInp.value)||30)/10)*10):getDurInp();
+  const durMins=durInp?normalizeDuration(durInp.value):getDurInp();
   closeCellPop();
 
   const[startH,aid]=key.split('|');
@@ -2315,7 +3115,7 @@ function cellPopAssign(key, gid){
     const h=dh[si+i];
     if((hm[aid]?.[h]||[]).includes(gid)){toast('El bloque se superpone con uno existente','warn');return;}
   }
-  snap();
+  if(!snap())return;
   if(!schedule[key])schedule[key]=[];
   schedule[key].push({gid,dur:durMins,note:''});
   saveAll();renderTable();updConflictUI();
@@ -2364,7 +3164,7 @@ function updAuthUI(user){
   const btn=document.getElementById('auth-btn');
   if(!btn)return;
   if(user){
-    btn.textContent='✓ '+user.email.split('@')[0];
+    btn.textContent='Editor: '+user.email.split('@')[0];
     btn.classList.add('signed-in');
     setReadOnly(false);
     setSyncDot('ok');
@@ -2381,6 +3181,7 @@ function updAuthUI(user){
 // ══════════════════════════════════════════════
 renderClubName();
 applyTheme();
+initPWA();
 renderColorPicker();
 renderSidebar();
 renderTable();
@@ -2408,6 +3209,7 @@ function initFirebase(){
           aparatos=d.aparatos||aparatos;
           schedule=d.schedule||schedule;
           clubName=d.clubName||clubName;
+          ignoredConflicts=normalizeConflictApprovals(d.ignoredConflicts||ignoredConflicts);
           _origSaveAll();
           invalidateCache();
           refreshAll();
