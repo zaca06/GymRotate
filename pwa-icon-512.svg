@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="CEGALP">
+  <rect width="512" height="512" rx="112" fill="#0c0d10"/>
+  <rect x="48" y="48" width="416" height="416" rx="90" fill="#c8f135"/>
+  <path d="M144 170c0-40 32-70 78-70 35 0 62 16 78 43l-46 27c-8-15-19-24-35-24-21 0-35 16-35 38v144c0 22 14 38 35 38 19 0 30-10 38-27l46 27c-17 30-46 46-83 46-45 0-76-30-76-70V170Z" fill="#0c0d10"/>
+  <path d="M322 104h48v200h78v45H322V104Z" fill="#0c0d10"/>
+  <text x="256" y="436" text-anchor="middle" font-family="Arial, sans-serif" font-size="54" font-weight="900" letter-spacing="5" fill="#0c0d10">CEGALP</text>
+</svg>
