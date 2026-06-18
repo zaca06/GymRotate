@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GymRotate Pro — Planificador de rotaciones</title>
-<meta name="description" content="Planificador de rotaciones de gimnasia artística. Organizá días, aparatos y grupos con drag & drop. Exportá a PDF, PNG, CSV o iCal.">
+<title>Horarios CEGALP — Rotaciones de gimnasia artística</title>
+<meta name="description" content="Horario oficial de rotaciones de gimnasia artística de CEGALP. Consultá por grupo, profesor/a o grilla completa.">
 <meta name="theme-color" content="#0c0d10">
 <meta property="og:type" content="website">
-<meta property="og:title" content="GymRotate Pro">
-<meta property="og:description" content="Planificador de rotaciones de gimnasia artística. Gratis, sin cuenta, funciona offline.">
+<meta property="og:title" content="Horarios CEGALP">
+<meta property="og:description" content="Horario oficial de rotaciones de gimnasia artística de CEGALP. Consultá grupos, profes y aparatos.">
 <meta property="og:locale" content="es_AR">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c8f135'/><text x='16' y='23' text-anchor='middle' font-family='monospace' font-weight='900' font-size='18' fill='%230c0d10'>G</text></svg>">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23c8f135'/><text x='16' y='23' text-anchor='middle' font-family='monospace' font-weight='900' font-size='18' fill='%230c0d10'>C</text></svg>">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./pwa-icon-192.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -323,6 +323,7 @@ textarea.fi{resize:vertical;min-height:50px;line-height:1.5;}
 .modal{background:var(--s1);border:1px solid var(--bd);border-radius:13px;padding:18px;width:300px;max-height:92vh;overflow-y:auto;animation:mIn .17s ease;}
 @keyframes mIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 .modal h4{font-size:.85rem;font-weight:700;margin-bottom:11px;}
+.modal-help{font-size:.68rem;color:var(--tx2);line-height:1.45;margin:-5px 0 12px;}
 .mbtns{display:flex;gap:6px;margin-top:11px;}
 .mbtns button{flex:1;}
 .mc-row{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:9px;}
@@ -397,6 +398,8 @@ body.readonly .toolbar .tbtn:not(.allow-readonly){pointer-events:none;opacity:.3
 body.light .tc.jump-target{box-shadow:inset 0 0 0 2px var(--acc),0 0 0 2px rgba(47,143,31,.14);}
 body.readonly .edit-only,body.readonly #nb-groups,body.readonly .undo-grp,body.readonly .blk-acts,body.readonly .day-acts,body.readonly .th-ap-acts,body.readonly .approval-only{display:none!important;}
 body.readonly .club-name{pointer-events:none;cursor:default;opacity:.9;}
+body.readonly .th-day,body.readonly .th-ap,body.readonly .blk{cursor:default;}
+body.readonly .tc.cell-hover{background:transparent;}
 .hdr{height:auto;min-height:64px;padding:12px 16px;align-items:flex-start;gap:12px;}
 .brand{display:flex;flex-direction:column;gap:2px;min-width:max-content;}
 .brand-tag{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3);}
@@ -421,6 +424,18 @@ body.readonly .club-name{pointer-events:none;cursor:default;opacity:.9;}
 .summary-card strong,.kpi-card strong{display:block;font-size:1rem;font-weight:800;color:var(--tx);}
 .summary-card small,.kpi-card small{display:block;margin-top:4px;font-size:.64rem;color:var(--tx2);}
 .summary-card.alert,.kpi-card.alert{border-color:rgba(240,180,41,.24);background:rgba(240,180,41,.05);}
+.public-hero{display:none;margin:14px 14px 0;padding:16px;border:1px solid var(--bd);border-radius:22px;background:
+  radial-gradient(circle at top left,rgba(200,241,53,.18),transparent 34%),
+  linear-gradient(135deg,var(--s1),var(--s2));gap:16px;align-items:center;justify-content:space-between;}
+body.readonly .public-hero{display:flex;}
+.public-kicker{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin-bottom:6px;}
+.public-hero h1{font-size:1.28rem;line-height:1.12;font-weight:850;margin-bottom:6px;}
+.public-hero p{font-size:.76rem;line-height:1.55;color:var(--tx2);max-width:560px;}
+.public-actions{display:grid;grid-template-columns:repeat(2,minmax(120px,1fr));gap:8px;min-width:280px;}
+.public-action{border:1px solid var(--bd);border-radius:14px;background:rgba(255,255,255,.035);color:var(--tx);padding:10px 12px;text-align:left;cursor:pointer;transition:all .14s;}
+.public-action:hover{border-color:var(--acc);background:rgba(200,241,53,.08);transform:translateY(-1px);}
+.public-action strong{display:block;font-size:.78rem;font-weight:800;}
+.public-action span{display:block;margin-top:2px;font-size:.61rem;color:var(--tx3);}
 .toolbar{padding:10px 14px;gap:10px;background:var(--bg);border-bottom:none;}
 .toolbar-block{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:8px 10px;border:1px solid var(--bd);border-radius:16px;background:var(--s1);}
 .toolbar-edit{flex:1 1 320px;}
@@ -501,11 +516,27 @@ body.readonly .club-name{pointer-events:none;cursor:default;opacity:.9;}
   .nb{flex:0 0 auto;}
   .hdr-right{width:100%;justify-content:space-between;gap:8px;}
   .status-row,.hdr-actions{width:100%;justify-content:space-between;}
-  .summary-strip,.stats-kpis,.sb-meta,.report-days{grid-template-columns:1fr;}
+  .stats-kpis,.sb-meta,.report-days{grid-template-columns:1fr;}
+  .public-hero{margin:10px 10px 0;padding:13px;display:none;flex-direction:column;align-items:stretch;gap:12px;}
+  body.readonly .public-hero{display:flex;}
+  .public-hero h1{font-size:1.05rem;}
+  .public-hero p{font-size:.7rem;}
+  .public-actions{grid-template-columns:repeat(2,minmax(0,1fr));min-width:0;}
+  .public-action{padding:9px 10px;}
+  .summary-strip{display:flex;overflow-x:auto;gap:8px;padding:8px 10px;scrollbar-width:none;}
+  .summary-strip::-webkit-scrollbar{display:none;}
+  .summary-card{min-width:124px;padding:9px 10px;border-radius:14px;}
+  .summary-card span{font-size:.52rem;margin-bottom:4px;}
+  .summary-card strong{font-size:.88rem;}
+  .summary-card small{font-size:.56rem;}
   .toolbar-block{width:100%;}
+  body.readonly .toolbar{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;align-items:stretch;}
+  body.readonly .toolbar::-webkit-scrollbar{display:none;}
+  body.readonly .toolbar-block{width:auto;flex:0 0 auto;}
   .dur-grp,.zoom-grp{width:100%;justify-content:space-between;}
   .filter-btn-wrap,.tbtn.active-filter{max-width:none;}
   .sidebar{max-height:none;}
+  body.readonly .sidebar{display:none;}
   .sb-pills{padding:10px;display:flex;flex-direction:column;overflow:auto;}
   .pill,.sb-empty{min-width:0;}
   .v-stats,.v-groups{padding:14px;}
@@ -521,8 +552,25 @@ body.readonly .club-name{pointer-events:none;cursor:default;opacity:.9;}
 }
 @media (max-width:640px){
   .readonly-bar{padding:7px 10px;line-height:1.4;}
+  .hdr{padding:8px;gap:7px;}
+  .brand{min-width:0;flex:1;}
+  .logo{font-size:.84rem;}
+  .logo-mark{width:22px;height:22px;}
+  .brand-tag,.club-name,.save-badge,.mode-badge{display:none!important;}
+  .nav{order:2;width:100%;padding:3px;}
+  .nb{padding:6px 10px;font-size:.68rem;}
+  .hdr-right{order:3;width:100%;gap:6px;}
+  .status-row,.hdr-actions{width:100%;justify-content:space-between;gap:6px;}
+  body.readonly .status-row{display:none;}
+  body.readonly #theme-btn{display:none;}
+  .auth-btn,.ubtn{padding:6px 8px;font-size:.68rem;}
+  .install-btn{max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .public-hero{padding:12px;}
+  .public-hero p{display:none;}
+  .public-actions{grid-template-columns:1fr 1fr;}
+  .public-action strong{font-size:.72rem;}
+  .public-action span{display:none;}
   .toolbar{padding:8px;gap:6px;}
-  .club-name{width:100%;text-align:center;}
   .th-corner,.tc-time{width:48px;min-width:48px;}
   .th-day{padding:6px 5px;font-size:.58rem;}
   .th-ap{min-width:112px;padding:4px 6px;}
@@ -539,10 +587,10 @@ body.readonly .club-name{pointer-events:none;cursor:default;opacity:.9;}
 <header class="hdr">
   <div class="brand">
     <div class="logo">
-      <div class="logo-mark">G</div>
-      Gym<em>Rotate</em>
+      <div class="logo-mark">C</div>
+      CEGALP<em>Rotaciones</em>
     </div>
-    <span class="brand-tag">Planificador de rotaciones</span>
+    <span class="brand-tag">Horario oficial</span>
   </div>
   <span class="club-name" id="club-name-lbl" onclick="openModal('modal-club')" title="Editar nombre del club">—</span>
   <nav class="nav">
@@ -560,8 +608,8 @@ body.readonly .club-name{pointer-events:none;cursor:default;opacity:.9;}
       <button class="conf-pill" id="conf-pill" onclick="toggleConf()"><span id="conf-pill-txt"></span></button>
     </div>
     <div class="hdr-actions">
-      <button class="auth-btn install-btn allow-readonly" id="install-btn" onclick="triggerInstall()">Instalar app</button>
-      <button class="auth-btn" id="auth-btn" onclick="openAuthModal()">Iniciar sesión</button>
+      <button class="auth-btn install-btn allow-readonly" id="install-btn" onclick="triggerInstall()">Instalar CEGALP</button>
+      <button class="auth-btn" id="auth-btn" onclick="openAuthModal()">Acceso coordinación</button>
       <button class="ubtn" id="theme-btn" onclick="toggleTheme()" title="Cambiar tema">Tema</button>
       <div class="undo-grp">
         <button class="ubtn" id="btn-undo" disabled onclick="undo()" title="Ctrl+Z">↩</button>
@@ -573,9 +621,22 @@ body.readonly .club-name{pointer-events:none;cursor:default;opacity:.9;}
 
 <!-- SCHEDULE VIEW -->
 <div class="view on" id="view-sched">
-  <div id="readonly-bar" class="readonly-bar">Modo lectura. Iniciá sesión para editar.</div>
+  <div id="readonly-bar" class="readonly-bar">Horario oficial de CEGALP. Acceso coordinación para editar.</div>
   <div class="sched-layout">
     <div class="sched-main">
+      <section class="public-hero" aria-label="Consulta rápida">
+        <div>
+          <div class="public-kicker">CEGALP · Gimnasia artística</div>
+          <h1>Consultá tu rotación en segundos</h1>
+          <p>Buscá por grupo, profesor/a o mirá la grilla completa. Este horario se actualiza en vivo desde coordinación.</p>
+        </div>
+        <div class="public-actions">
+          <button class="public-action" onclick="openModal('modal-gview')"><strong>Ver mi grupo</strong><span>Recorrido semanal</span></button>
+          <button class="public-action" onclick="openModal('modal-tview')"><strong>Ver profe</strong><span>Agenda por docente</span></button>
+          <button class="public-action" onclick="openFilterMenu()"><strong>Filtrar grilla</strong><span>Grupo o profe</span></button>
+          <button class="public-action" onclick="openExportDays('pdf')"><strong>Descargar PDF</strong><span>Para compartir</span></button>
+        </div>
+      </section>
       <div class="summary-strip" id="sched-summary">
         <div class="summary-card">
           <span>Días</span>
@@ -606,8 +667,8 @@ body.readonly .club-name{pointer-events:none;cursor:default;opacity:.9;}
       <div class="toolbar">
         <div class="toolbar-block">
           <span class="toolbar-label">Consulta</span>
-          <button class="tbtn allow-readonly" onclick="openModal('modal-gview')">Vista grupo</button>
-          <button class="tbtn allow-readonly" onclick="openModal('modal-tview')">Vista profe</button>
+          <button class="tbtn allow-readonly" onclick="openModal('modal-gview')">Por grupo</button>
+          <button class="tbtn allow-readonly" onclick="openModal('modal-tview')">Por profe</button>
           <button class="tbtn allow-readonly" onclick="openModal('modal-export')">Exportar</button>
         </div>
         <div class="toolbar-block">
@@ -1134,7 +1195,7 @@ let aparatos = LS.load('gr4_aps',[
 // schedule: "HH:MM|apId" → [{gid,dur(mins),note}]
 let schedule  = LS.load('gr4_sched',{});
 let templates = LS.load('gr4_tpls',[]);
-let clubName  = LS.load('gr4_club','');
+let clubName  = LS.load('gr4_club','CEGALP');
 let ignoredConflicts = normalizeConflictApprovals(LS.load('gr4_ignconf',{}));
 
 // ── FILTER ──
@@ -1602,8 +1663,8 @@ function renderSidebar(){
   const teacherCount=[...new Set(groups.map(g=>g.teacher).filter(Boolean))].length;
   const filterChip=filterType&&filterValue?`<div class="sb-filter-chip"><span>${escapeHtml(getFilterLabel())}</span><button onclick="clearFilter(false);renderSidebar()">Limpiar</button></div>`:'';
   if(_isReadOnly){
-    if(ttl)ttl.textContent='Panel de consulta';
-    if(sub)sub.textContent='Compartí horarios, filtrá por profe o grupo y exportá en un formato prolijo.';
+    if(ttl)ttl.textContent='Consulta CEGALP';
+    if(sub)sub.textContent='Accesos rápidos para familias, gimnastas y profes.';
     if(meta)meta.innerHTML=`
       <div class="sb-stat"><strong>${groups.length}</strong><span>grupos cargados</span></div>
       <div class="sb-stat"><strong>${teacherCount}</strong><span>profesores activos</span></div>
@@ -1612,12 +1673,12 @@ function renderSidebar(){
     el.innerHTML=`
       ${filterChip}
       <div class="sb-actions">
-        <button class="sb-side-btn" onclick="openModal('modal-gview')">Vista grupo</button>
-        <button class="sb-side-btn" onclick="openModal('modal-tview')">Vista profe</button>
+        <button class="sb-side-btn" onclick="openModal('modal-gview')">Ver grupo</button>
+        <button class="sb-side-btn" onclick="openModal('modal-tview')">Ver profe</button>
         <button class="sb-side-btn" onclick="openExportDays('pdf')">Exportar PDF</button>
         <button class="sb-side-btn" onclick="openExportDays('png')">Exportar PNG</button>
       </div>
-      <div class="sb-note">Este panel está optimizado para consulta. Si necesitás mover bloques, crear días o editar grupos, iniciá sesión y pasá a modo edición.</div>`;
+      <div class="sb-note">Esta es la cartelera viva de CEGALP. Para mover bloques, crear días o editar grupos, usá el acceso de coordinación.</div>`;
     return;
   }
   if(ttl)ttl.textContent='Biblioteca de grupos';
@@ -2101,7 +2162,7 @@ function renderTable(){
       : `linear-gradient(180deg, ${rgba(dc,.24)} 0%, ${rgba(dc,.08)} 100%)`;
     r1+=`<th class="th-day${dayDragOver===d.id?' day-drag-over':''}" data-did="${d.id}" colspan="${cols}"
       style="color:${isDark?dc:'var(--tx)'};border-bottom-color:${dc};background:${dayBg};box-shadow:inset 0 1px 0 ${rgba(dc,isDark?.18:.28)};${last?'border-right:none':''}"
-      draggable="true"
+      draggable="${!_isReadOnly}"
       ondragstart="onDayColDS(event,'${d.id}')"
       ondragover="onDayColDO(event,'${d.id}')"
       ondragleave="onDayColDL(event,'${d.id}')"
@@ -2136,7 +2197,7 @@ function renderTable(){
       dAps.forEach((a,ai)=>{
         const isLast=lastDay&&ai===dAps.length-1;
         r1+=`<th class="th-ap${apDragOver===a.id?' ap-drag-over':''}" data-aid="${a.id}" style="${isLast?'border-right:none':''}"
-          draggable="true"
+          draggable="${!_isReadOnly}"
           ondragstart="onApColDS(event,'${a.id}')"
           ondragover="onApColDO(event,'${a.id}')"
           ondragleave="onApColDL(event,'${a.id}')"
@@ -2215,7 +2276,7 @@ function renderTable(){
             const frameCol=_lum>145?'rgba(255,255,255,.45)':'rgba(0,0,0,.18)';
             blkHtml+=`
               <div class="blk${isConfl?' conflict':''}${isDimmed?' dimmed-blk':''}${isTiny?' blk-tiny':''}"
-                draggable="true"
+                draggable="${!_isReadOnly}"
                 ondragstart="onBlkDragStart(event,'${o.startKey}','${o.gid}')"
                 ondragend="onBlkDragEnd(event)"
                 style="height:${blockH}px;background:${g.color};color:${txtCol};border:1px solid ${frameCol};${oi>0?`top:${1+offsetY}px;left:${1+offsetX}px;right:${1-offsetX}px;`:''}"
@@ -2697,11 +2758,11 @@ function updateInstallUI(){
   if(isStandalonePWA()){btn.hidden=true;return;}
   btn.hidden=false;
   btn.disabled=false;
-  btn.textContent='Instalar app';
-  btn.title=location.protocol==='file:'?'Abrila desde localhost o un dominio seguro para instalarla':'Instalar GymRotate como app';
+  btn.textContent='Instalar CEGALP';
+  btn.title=location.protocol==='file:'?'Abrila desde localhost o un dominio seguro para instalarla':'Instalar Horarios CEGALP como app';
 }
 async function triggerInstall(){
-  if(isStandalonePWA()){toast('La app ya está instalada');updateInstallUI();return;}
+  if(isStandalonePWA()){toast('Horarios CEGALP ya está instalada');updateInstallUI();return;}
   if(location.protocol==='file:'){toast('Para instalarla como app, abrila desde localhost o un dominio seguro.','warn');return;}
   if(!deferredInstallPrompt){toast('La instalación todavía no está disponible en este navegador.','warn');return;}
   const promptEvent=deferredInstallPrompt;
@@ -2720,7 +2781,7 @@ function initPWA(){
   window.addEventListener('appinstalled',()=>{
     deferredInstallPrompt=null;
     updateInstallUI();
-    toast('App instalada ✓');
+    toast('Horarios CEGALP instalada ✓');
   });
   if(!canUsePWA()||!('serviceWorker' in navigator))return;
   navigator.serviceWorker.register('./sw.js').catch(()=>{});
@@ -3164,12 +3225,12 @@ function updAuthUI(user){
   const btn=document.getElementById('auth-btn');
   if(!btn)return;
   if(user){
-    btn.textContent='Editor: '+user.email.split('@')[0];
+    btn.textContent='Coordinación: '+user.email.split('@')[0];
     btn.classList.add('signed-in');
     setReadOnly(false);
     setSyncDot('ok');
   } else {
-    btn.textContent='Iniciar sesión';
+    btn.textContent='Acceso coordinación';
     btn.classList.remove('signed-in');
     setReadOnly(true);
     setSyncDot('');
@@ -3230,7 +3291,8 @@ if(window._fbReady){
 <!-- Login modal -->
 <div class="overlay" id="modal-login">
   <div class="modal" style="width:300px">
-    <h4>Iniciar sesión</h4>
+    <h4>Acceso coordinación</h4>
+    <p class="modal-help">Solo para quienes editan el horario oficial de CEGALP.</p>
     <div class="frow"><label>Email</label><input class="fi" id="login-email" type="email" placeholder="tu@email.com" onkeydown="if(event.key==='Enter')doLogin()"></div>
     <div class="frow"><label>Contraseña</label><input class="fi" id="login-pass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
     <div class="login-err" id="login-err"></div>
